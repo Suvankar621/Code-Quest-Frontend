@@ -1,0 +1,78 @@
+.Hero{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 72%;
+    margin: auto;
+    overflow: hidden;
+}
+.eyk,.cq{
+    color: #0F3DDE;
+    font-weight: bold;
+}
+.rest{
+    color: black;
+}
+.Hero img{
+    height: 368px;
+    width: 425px;
+    margin-left: 3vmax;
+    animation: animation 4s ease-out infinite;
+}
+.text button{
+ width: 112px;
+ height: 38px;
+ font-size: 20px;
+ font-weight: bold;
+ background-color: #3D39F8;
+ color: white;
+ border: none;
+}
+.wave{
+    position: absolute;
+    bottom: 0;
+    width: 100vw;
+   
+}
+.container{
+   overflow: hidden;
+}
+.el{
+    color: white;
+}
+.type_text .eyk {
+    animation: glow 3s infinite; 
+}
+.text button:hover{
+    background-color: #001e8b;
+}
+@keyframes glow {
+    0% {
+        color: #c300ff; 
+        text-shadow: 0 0 10px #FFA500, 0 0 20px #FFA500, 0 0 30px #FFA500;
+    }
+    50% {
+        color: #ff00bb; 
+        text-shadow: 0 0 20px #FFD700, 0 0 30px #FFD700, 0 0 40px #FFD700; 
+    }
+    100% {
+        color: #6200ff; 
+        text-shadow: 0 0 10px #FFA500, 0 0 20px #FFA500, 0 0 30px #FFA500; 
+}
+}
+
+
+
+@keyframes animation {
+    0% {
+        transform: translateY(-10px);
+    }
+    50% {
+        transform: translateY(5px); 
+    }
+    100% {
+        transform: translateY(-10px); 
+    }
+  }
+
+

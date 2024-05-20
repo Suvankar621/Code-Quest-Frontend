@@ -1,0 +1,41 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 4vmax;
+}
+.navbar h1{
+    margin: 1vmax;
+    color: #0F3DDE;
+    font-weight: bold;
+}
+.auth-buttons{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login_btn{
+    margin: 1vmax;
+    width: 7vmax;
+    height: 2vmax;
+    background-color: transparent;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid black;
+    font-size: 12px;
+    box-shadow: 2px 2px 5px black;
+    
+}
+.signup_btn{
+    margin: 1vmax;
+    width: 7vmax;
+    height: 2vmax;
+    background-color: #0F3DDE;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    border: none;
+    font-size: 12px;
+    box-shadow: 2px 2px 5px black;
+    
+}

@@ -1,0 +1,46 @@
+.top_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+}
+.top_container h1{
+    width: 51vmax;
+}
+.top_container img{
+    width: 521px;
+    height: 319px;
+}
+.sc{
+    color: white;
+}
+.para{
+    margin-left: 3vmax;
+    margin-top: -3vmax;
+    font-size: 20px;
+    width: 506px;
+}
+
+.btn{
+    width: 156px;
+    height: 33px;
+    background-color: #0F3DDE;
+ 
+    border: none;
+    margin-left: 1vmax;
+}
+.btn a{
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+.btn_text{
+    margin: 3vmax;
+}
+#main_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
