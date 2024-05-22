@@ -39,8 +39,9 @@ function App() {
   return (
    <Context.Provider value={{isAuthenticated,setisAuthenticated}}>
     <div className='App'>
+    <ToastContainer/>
     <BrowserRouter>
-   <ToastContainer/>
+  
       <Navbar/>
      
       <Routes>

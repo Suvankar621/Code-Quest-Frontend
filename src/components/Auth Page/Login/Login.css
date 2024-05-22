@@ -70,6 +70,14 @@ label{
     color: white;
     
 }
+.btnn:hover{
+    background-color: #0F3DDE;
+    color: white;
+    border: none;
+    }
+.btnn:active{
+        scale: 0.9;
+    }
 .email,.pass{
     margin-top: 1vmax;
 }

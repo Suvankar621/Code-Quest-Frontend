@@ -2,16 +2,37 @@ import React, { useContext } from "react";
 import "./Navbar.css";
 import { Link } from "react-router-dom";
 import { Context } from "../../Context";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Navbar = () => {
   const {isAuthenticated,setisAuthenticated}=useContext(Context)
+  
+  const onLogoutHandle = async (e) => {
+    e.preventDefault();
+
+    try {
+       const {data}= await axios.get("https://code-quest-backend.onrender.com/api/v1/users/logout",
+            {
+                withCredentials: true
+            }
+        );
+        toast.success(data.message);
+        setisAuthenticated(false);
+   
+    } catch (error) {
+      toast.error(error.response.data.message)
+        setisAuthenticated(true)
+    }
+ 
+};
   return (
     <div className="navbar">
       <h1>CodeQuest</h1>
       <div className="auth-buttons">
         {isAuthenticated?  <div>
-          <Link to={"/logout"}>
-            <input type="button" value="Logout" className="login_btn" />
+          <Link to={"/"}>
+            <input type="button" value="Logout" className="login_btn" onClick={onLogoutHandle} />
           </Link>
         </div>:<>
         <div>

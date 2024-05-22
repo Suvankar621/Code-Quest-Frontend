@@ -76,6 +76,14 @@ label{
     color: white;
     
 }
+.btnn:hover{
+    background-color: #0F3DDE;
+    color: white;
+    border: none;
+    }
+.btnn:active{
+        scale: 0.9;
+    }
 #checkbox{
     width: 1vmax;
     margin-top: 1vmax;

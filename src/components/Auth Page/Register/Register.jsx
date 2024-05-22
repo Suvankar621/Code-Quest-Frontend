@@ -12,6 +12,7 @@ const Register = () => {
   const [role,setRole]=useState("");
 
   const {isAuthenticated,setisAuthenticated}=useContext(Context)
+
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
@@ -51,18 +52,18 @@ if(isAuthenticated){
         <h1>Get Started Now</h1>
         </div>
        
-        <form >
+        <form onSubmit={onSubmitHandler}>
           <div className="name">
           <label>Name</label><br />
-            <input type="text" value={name} onChange={(e)=>setName(e.target.value)} /><br />
+            <input type="text" value={name} onChange={(e)=>setName(e.target.value)} required /><br />
           </div>
           <div className="email">
           <label>Email address</label><br />
-            <input type="email"  value={email} onChange={(e)=>setEmail(e.target.value)} /><br />
+            <input type="email"  value={email} onChange={(e)=>setEmail(e.target.value)} required/><br />
           </div>
           <div className="pass">
             <label >Password</label><br />
-            <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} /><br />
+            <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} required/><br />
           </div>
           
           
@@ -74,10 +75,12 @@ if(isAuthenticated){
                 id="roles"
                 value={role}
                 onChange={(e) => setRole(e.target.value)}
+                required
             >
-                <option value="participants">Participants</option>
-                <option value="organizer">Organizer</option>
-                <option value="judge">Judge</option>
+              <option value="" disabled hidden> None</option>
+              <option value="participants">Participants</option>
+              <option value="organizer">Organizer</option>
+              <option value="judge">Judge</option>
             </select>
             <br />
         </div>
@@ -88,7 +91,7 @@ if(isAuthenticated){
             <input type="checkbox" id='checkbox' /> 
             <span >Forget Password</span><br />
 
-            <button className='btnn' onClick={onSubmitHandler} >Sign up</button>
+            <button className='btnn' type='submit' >Sign up</button>
         </form>
         
     </div>

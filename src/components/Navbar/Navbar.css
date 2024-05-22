@@ -24,8 +24,17 @@
     border: 1px solid black;
     font-size: 12px;
     box-shadow: 2px 2px 5px black;
+    cursor: pointer;
 
     
+}
+.login_btn:hover{
+background-color: #0F3DDE;
+color: white;
+border: none;
+}
+.login_btn:active{
+    scale: 0.9;
 }
 .signup_btn{
     margin: 1vmax;
@@ -40,3 +49,11 @@
     box-shadow: 2px 2px 5px black;
     
 }
+.signup_btn:hover{
+    background-color: #0F3DDE;
+    color: white;
+    border: none;
+    }
+.signup_btn:active{
+        scale: 0.9;
+    }

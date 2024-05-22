@@ -49,16 +49,16 @@ if(isAuthenticated){
             <form onSubmit={onSubmitHandler}>
                 <div className="email">
                 <label>Email address</label><br />
-                <input type="email" onChange={(e)=>setEmail(e.target.value)}  /><br />
+                <input type="email" onChange={(e)=>setEmail(e.target.value)} required /><br />
                 </div>
 
                 <div className="pass">
                 <label >Password</label><br />
-                <input type="password" onChange={(e)=>setPassword(e.target.value)}  /><br />
+                <input type="password" onChange={(e)=>setPassword(e.target.value)}  required/><br />
                 </div>
 
             
-                <input type="checkbox" id='checkbox' /> 
+                <input type="checkbox" id='checkbox'  /> 
                 <span >Forget Password</span><br />
                 
                 <button type='submit' className='btnn'>Login</button>
