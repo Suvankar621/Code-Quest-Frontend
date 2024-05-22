@@ -6,6 +6,9 @@
     margin: auto;
     overflow: hidden;
 }
+.text{
+    margin-left: 2vmax;
+}
 .eyk,.cq{
     color: #0F3DDE;
     font-weight: bold;

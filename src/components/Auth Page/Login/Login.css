@@ -19,12 +19,6 @@
 
 
 }
-.name,.email,.pass{
-    margin-top: 1vmax;
-}
-.roleselect{
-    margin-top: 1vmax;
-}
 .Image{
     width: 50%;
     display: flex;
@@ -63,7 +57,7 @@ label{
 }
 
 .text{
-   margin-left: -16vmax;
+   margin-left: -11vmax;
    margin-top: -3vmax;
 }
 .btnn{
@@ -75,6 +69,9 @@ label{
     background-color: #3A5B22;
     color: white;
     
+}
+.email,.pass{
+    margin-top: 1vmax;
 }
 #checkbox{
     width: 1vmax;
