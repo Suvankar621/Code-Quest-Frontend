@@ -22,6 +22,8 @@ const Main = () => {
         <h3>CHALLENGES</h3>
         <div className="card_items">
         <HackethonCard />
+        <HackethonCard />
+        <HackethonCard />
         </div>
         
 

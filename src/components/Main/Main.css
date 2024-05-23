@@ -109,7 +109,9 @@
    
 }
 .card_items{
+    display: flex;
     margin: 1.5vmax;
+    gap: 10px;
 }
 @keyframes animation {
     0% {

@@ -16,9 +16,10 @@ import axios from 'axios';
 function App() {
   
   const [isAuthenticated,setisAuthenticated]=useState(false)
+  const [isLoader,setisLoader]=useState(false)
 
+ 
   useEffect(() => {
-    
       axios.get("https://code-quest-backend.onrender.com/api/v1/users/me",
       {
         
@@ -30,14 +31,12 @@ function App() {
         setisAuthenticated(false)
        
       })
-    
- 
-   
   }, [])
   
 
   return (
-   <Context.Provider value={{isAuthenticated,setisAuthenticated}}>
+   <Context.Provider value={{isAuthenticated,setisAuthenticated,isLoader,setisLoader}}>
+    
     <div className='App'>
     <ToastContainer/>
     <BrowserRouter>

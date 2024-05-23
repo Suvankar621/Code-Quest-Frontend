@@ -4,14 +4,16 @@ import { Link } from "react-router-dom";
 import { Context } from "../../Context";
 import { toast } from "react-toastify";
 import axios from "axios";
+import Loading from "../Loader/Loading";
 
 const Navbar = () => {
-  const {isAuthenticated,setisAuthenticated}=useContext(Context)
+  const {isAuthenticated,setisAuthenticated,isLoader,setisLoader}=useContext(Context)
   
   const onLogoutHandle = async (e) => {
     e.preventDefault();
 
     try {
+      setisLoader(true)
        const {data}= await axios.get("https://code-quest-backend.onrender.com/api/v1/users/logout",
             {
                 withCredentials: true
@@ -19,13 +21,19 @@ const Navbar = () => {
         );
         toast.success(data.message);
         setisAuthenticated(false);
+        setisLoader(false)
    
     } catch (error) {
       toast.error(error.response.data.message)
         setisAuthenticated(true)
     }
+
+    
  
 };
+if(isLoader){
+  return <Loading/>
+}
   return (
     <div className="navbar">
       <h1>CodeQuest</h1>

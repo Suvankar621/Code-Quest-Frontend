@@ -4,6 +4,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { Context } from '../../../Context';
 import { Navigate } from 'react-router-dom';
+import Loading from '../../Loader/Loading';
 
 const Register = () => {
   const [name,setName]=useState("");
@@ -11,12 +12,13 @@ const Register = () => {
   const [password,setPassword]=useState("");
   const [role,setRole]=useState("");
 
-  const {isAuthenticated,setisAuthenticated}=useContext(Context)
+  const {isAuthenticated,setisAuthenticated,isLoader,setisLoader}=useContext(Context)
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
 
     try {
+      setisLoader(true)
         const { data } = await axios.post(
             "https://code-quest-backend.onrender.com/api/v1/users/new",
             { name, email, password, role },
@@ -27,8 +29,10 @@ const Register = () => {
                 withCredentials: true
             }
         );
+        setisLoader(false);
         toast.success(data.message);
         setisAuthenticated(true);
+        
         
 
         
@@ -41,6 +45,9 @@ const Register = () => {
 };
 if(isAuthenticated){
   return <Navigate to={"/"} />
+}
+if(isLoader){
+  return <Loading/>
 }
 
   console.log(name,email,password,role)
