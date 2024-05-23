@@ -38,6 +38,7 @@ const Register = () => {
         
    
     } catch (error) {
+        setisLoader(false);
         toast.error(error.response?.data?.message || "An error occurred");
         setisAuthenticated(false);
     }
