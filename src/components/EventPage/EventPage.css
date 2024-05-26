@@ -1,0 +1,183 @@
+.img{
+    width: 100vw;
+    height: 110vh;
+    background-color: blue;
+    background-image: url("../../../public/Images/event_img.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.heros {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0px;
+    text-align: center;
+}
+ 
+.heros h1 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+ 
+/* .hero p {
+    font-size: 24px;
+    margin-bottom: 20px;
+} */
+ 
+.event-detailss {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    background-color: #fff;
+}
+ 
+.event-detailss .containers {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    margin: 2 auto;
+}
+ 
+.event-infos {
+    max-width: 60%;
+}
+ 
+.event-infos h2 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+ 
+.event-info .team-info {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #eee;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+ 
+.cta-buttonss {
+    text-align:center;
+ 
+   
+}
+ 
+.cta-buttons {
+    padding: 5px 30px;
+    font-size: 24px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+    margin-top: 30px;  /* Add this line to move the button down */
+ 
+}
+.cta-buttons_applied{
+    padding: 5px 30px;
+    font-size: 24px;
+    background-color: #04AA6D;;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+    margin-top: 30px; 
+}
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+.cta-button:hover {
+    background-color: #0056b3;
+}
+ 
+.invite-friends {
+    display: flex;
+    align-items: center;
+}
+ 
+.invite-friends input {
+    padding: 6px;
+    font-size: 13px;
+    margin-right: 10px;
+}
+ 
+.invite-button {
+    padding: 7px 14px;
+    font-size: 14px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+ 
+.invite-button:hover {
+    background-color: #218838;
+}
+ 
+.challenge-details {
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+ 
+.challenge-details .container {
+    width: 80%;
+    margin: 0 auto;
+}
+ 
+.challenge-details h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+ 
+.challenge-details p {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+ 
+.challenge-details ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+ 
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+ 
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+ 
+.footer-links {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+ 
+.footer-links a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+}
+ 
+.social-media {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+ 
+.social-media a img {
+    width: 24px;
+    height: 24px;
+    margin: 0 10px;
+}
+ 

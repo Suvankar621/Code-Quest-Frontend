@@ -110,8 +110,9 @@
 }
 .card_items{
     display: flex;
-    margin: 1.5vmax;
+    margin: 1vmax;
     gap: 10px;
+    flex-wrap: wrap;
 }
 @keyframes animation {
     0% {

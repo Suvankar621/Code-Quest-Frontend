@@ -6,17 +6,21 @@ import Login from './components/Auth Page/Login/Login';
 import Register from './components/Auth Page/Register/Register';
 import Hero from './components/Hero/Hero';
 import Main from './components/Main/Main';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import { Context } from './Context';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import EventPage from './components/EventPage/EventPage';
+
+
 
 
 
 function App() {
   
   const [isAuthenticated,setisAuthenticated]=useState(false)
-  const [isLoader,setisLoader]=useState(false)
+  const [isLoader,setisLoader]=useState(false);
+  const [user,setUser]=useState({});
 
  
   useEffect(() => {
@@ -24,8 +28,7 @@ function App() {
       {
         
       withCredentials: true
-      }).then((res)=>{
-        toast.error(res.data.message)
+      }).then(()=>{
         setisAuthenticated(true);
       }).catch(()=>{
         setisAuthenticated(false)
@@ -35,7 +38,7 @@ function App() {
   
 
   return (
-   <Context.Provider value={{isAuthenticated,setisAuthenticated,isLoader,setisLoader}}>
+   <Context.Provider value={{isAuthenticated,setisAuthenticated,isLoader,setisLoader,user,setUser}}>
     
     <div className='App'>
     <ToastContainer/>
@@ -49,6 +52,7 @@ function App() {
         
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
+        <Route path='/event/:id' element={<EventPage/>} />
     </Routes>
     </BrowserRouter>
     </div>

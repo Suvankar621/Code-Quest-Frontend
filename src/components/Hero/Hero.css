@@ -49,6 +49,19 @@
 .text button:hover{
     background-color: #001e8b;
 }
+.btn{
+    width: 404px;
+    height: 35.4px;
+    border: none;
+    background-color: #0F3DDE;
+    color: white;
+}
+.btn:active{
+    background-color: #0F3DDE;
+    color: white;
+    scale: 0.9;
+    border: none;
+}
 @keyframes glow {
     0% {
         color: #c300ff; 

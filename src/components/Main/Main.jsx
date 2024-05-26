@@ -1,8 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Main.css"
 import HackethonCard from '../Card/HackethonCard'
+import axios from 'axios'
 
 const Main = () => {
+  
+  const [contests,setcontests]=useState([]);
+
+ 
+  useEffect(() => {
+    axios.get("https://code-quest-backend.onrender.com/api/v1/contest/getcontests",{
+      withCredentials: true
+    }).then((res)=>{
+      setcontests(res.data.contests);
+
+    }).catch(()=>{
+
+    })
+   
+    
+  }, [])
+  console.log(contests)
   return (
     <>
     <section class="hero">
@@ -21,9 +39,12 @@ const Main = () => {
     <div id="main_container">
         <h3>CHALLENGES</h3>
         <div className="card_items">
-        <HackethonCard />
-        <HackethonCard />
-        <HackethonCard />
+          {contests.map((e)=>(
+            <HackethonCard id={e._id}/>
+          ))}
+       
+        {/* <HackethonCard id={2} />
+        <HackethonCard id={3} /> */}
         </div>
         
 
