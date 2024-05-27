@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "./EventPage.css"
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
@@ -6,72 +6,71 @@ import { Context } from '../../Context';
 
 
 const EventPage = () => {
-  const {user,setUser}=useContext(Context)
+  const { setUser } = useContext(Context);
+  const { id } = useParams();
+  const [isRegistered, setIsRegistered] = useState(false);
 
-  const {id}=useParams();
-  console.log(id)
-  const registerContest =  () => {
-     
+  
+
+  useEffect(() => {
+    const storedRegistrationStatus = localStorage.getItem(`registrationStatus_${id}`);
+    if (storedRegistrationStatus === "true") {
+      setIsRegistered(true);
+    } else {
+      setIsRegistered(false);
+    }
+  }, [id]);
+
+  const registerContest = () => {
     axios.get(
-    `https://code-quest-backend.onrender.com/api/v1/contest/register/${id}`,
-    { 
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json"
-    },
+      `https://code-quest-backend.onrender.com/api/v1/contest/register/${id}`,
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }
+    ).then((res) => {
+      setUser(res.data);
+      setIsRegistered(true);
+      localStorage.setItem(`registrationStatus_${id}`, "true");
+    }).catch((e) => {
+      console.log(e.response.data.message);
+    });
+  };
 
-     } // Configuration object
-  ).then((res)=>{
-   
-    setUser(res.data)
-    console.log(user);
-
-  }).catch((e)=>{
-    console.log(e.response.data.message)
-  });
-  
-
-};
-  // useEffect(() => {
-  //   const registerContest = async () => {
-     
-  //       const res = await axios.post(
-  //         `https://code-quest-backend.onrender.com/api/v1/contest/register/${id}`,
-  //         { withCredentials: true } // Configuration object
-  //       );
-  //       console.log(res.response.data.message);
-    
-  //   };
-
-  //   if (id) {
-  //     registerContest();
-  //   }
-   
-  // }, [id])
-  
   return (
     <>
+ 
     <div className='img'>  
         <img src="Images/Login_img.png" alt="" />
     </div>
     <section class="event-detailss">
     <div class="containers">
     <div class="event-infos">
-    <h2>CodeQuest Hackathon 2024</h2>
-    <span class="team-info">Allowed team size: 1-4</span>
+    <h2>My hackethon 2024</h2>
+    <span class="team-info">Individuals</span>
     <p>Hosted by CodeQuest</p>
-    <p><b>Opens on: June 07, 2024, 10:00 AM IST (Asia/Kolkata)</b></p>
-    <p><b>Closes on: July 01, 2024, 11:59 PM IST (Asia/Kolkata)</b></p>
+    
     </div>
     <div class="cta-buttonss">
-      {user?<button class="cta-buttons_applied disabled" disabled onClick={registerContest}><b>Applied</b></button>:<button class="cta-buttons" onClick={registerContest}><b>Participate Now</b></button>}
+    {isRegistered ? (
+              <button className="cta-buttons_applied" disabled><b>Applied</b></button>
+            ) : (
+              <button className="cta-buttons" onClick={registerContest}><b>Participate Now</b></button>
+            )}
     
-    <div class="invite-friends">
-    <input type="email" placeholder="Enter email" />
-    <button class="invite-button">Invite</button>
+
+   
+    
+   
     </div>
     </div>
-    </div>
+    <div className="problemStatement">
+     
+     <button>View Problem</button>
+   </div>
+   
     </section>
      
         <section class="challenge-details">

@@ -180,4 +180,19 @@ footer {
     height: 24px;
     margin: 0 10px;
 }
- 
+.problemStatement{
+    position: absolute;
+    margin-top: 14vmax;
+
+}
+.problemStatement button{
+    padding: 5px 30px;
+    font-size: 24px;
+    background-color: #3146ff;;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 10px;
+    margin-top: 30px; 
+}

@@ -21,6 +21,8 @@ function App() {
   const [isAuthenticated,setisAuthenticated]=useState(false)
   const [isLoader,setisLoader]=useState(false);
   const [user,setUser]=useState({});
+  const [ctitle,setctitle]=useState("");
+  
 
  
   useEffect(() => {
@@ -38,7 +40,7 @@ function App() {
   
 
   return (
-   <Context.Provider value={{isAuthenticated,setisAuthenticated,isLoader,setisLoader,user,setUser}}>
+   <Context.Provider value={{isAuthenticated,setisAuthenticated,isLoader,setisLoader,user,setUser,ctitle,setctitle}}>
     
     <div className='App'>
     <ToastContainer/>
