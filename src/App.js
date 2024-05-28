@@ -21,7 +21,6 @@ function App() {
   const [isAuthenticated,setisAuthenticated]=useState(false)
   const [isLoader,setisLoader]=useState(false);
   const [user,setUser]=useState({});
-  const [ctitle,setctitle]=useState("");
   
 
  
@@ -30,7 +29,8 @@ function App() {
       {
         
       withCredentials: true
-      }).then(()=>{
+      }).then((res)=>{
+        setUser(res.data.user)
         setisAuthenticated(true);
       }).catch(()=>{
         setisAuthenticated(false)
@@ -40,7 +40,7 @@ function App() {
   
 
   return (
-   <Context.Provider value={{isAuthenticated,setisAuthenticated,isLoader,setisLoader,user,setUser,ctitle,setctitle}}>
+   <Context.Provider value={{isAuthenticated,setisAuthenticated,isLoader,setisLoader,user,setUser}}>
     
     <div className='App'>
     <ToastContainer/>

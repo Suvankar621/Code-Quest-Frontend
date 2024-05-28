@@ -1,44 +1,56 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, {  useContext, useEffect, useState } from 'react'
 import "./EventPage.css"
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import { Context } from '../../Context';
+import { toast } from 'react-toastify';
+
 
 
 const EventPage = () => {
-  const { setUser } = useContext(Context);
-  const { id } = useParams();
-  const [isRegistered, setIsRegistered] = useState(false);
+  const [contest,setcontest]=useState([]);
+  const {user}=useContext(Context);
 
+  const {id}=useParams();
+  console.log(id)
+  const registerContest =  () => {
+     
+    axios.get(
+    `https://code-quest-backend.onrender.com/api/v1/contest/register/${id}`,
+    { 
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json"
+    },
+
+     } // Configuration object
+  ).then((res)=>{
+    toast.success(res.data.message)
+    console.log(res.data.message);
+
+  }).catch((e)=>{
+    console.log(e.response.data.message)
+    toast.success(e.response.data.message)
+ 
+  });
   
 
+};
   useEffect(() => {
-    const storedRegistrationStatus = localStorage.getItem(`registrationStatus_${id}`);
-    if (storedRegistrationStatus === "true") {
-      setIsRegistered(true);
-    } else {
-      setIsRegistered(false);
-    }
-  }, [id]);
-
-  const registerContest = () => {
-    axios.get(
-      `https://code-quest-backend.onrender.com/api/v1/contest/register/${id}`,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json"
-        }
-      }
-    ).then((res) => {
-      setUser(res.data);
-      setIsRegistered(true);
-      localStorage.setItem(`registrationStatus_${id}`, "true");
-    }).catch((e) => {
-      console.log(e.response.data.message);
-    });
-  };
-
+   axios.get(`https://code-quest-backend.onrender.com/api/v1/contest/getcontest/${id}`,{
+    withCredentials: true,
+    headers: {
+      "Content-Type": "application/json"
+  },
+   }).then((res)=>{
+    setcontest(res.data.contest);
+   }).catch(()=>{
+    setcontest([])
+   })
+   
+  }, [id])
+ 
+  console.log(contest)
   return (
     <>
  
@@ -48,29 +60,18 @@ const EventPage = () => {
     <section class="event-detailss">
     <div class="containers">
     <div class="event-infos">
-    <h2>My hackethon 2024</h2>
-    <span class="team-info">Individuals</span>
+    <h2>{contest.title}</h2>
+    <span class="team-info">Allowed Individuals</span>
     <p>Hosted by CodeQuest</p>
-    
+    <p><b>Opens on: {contest.startTime} IST (Asia/Kolkata)</b></p>
+    <p><b>Closes on: {contest.endTime} IST (Asia/Kolkata)</b></p>
     </div>
     <div class="cta-buttonss">
-    {isRegistered ? (
-              <button className="cta-buttons_applied" disabled><b>Applied</b></button>
-            ) : (
-              <button className="cta-buttons" onClick={registerContest}><b>Participate Now</b></button>
-            )}
+      {contest.registeredUsers && contest.registeredUsers.includes(user._id) ?<button class="cta-buttons_applied disabled" disabled ><b>Applied</b></button>:<button class="cta-buttons" onClick={registerContest}><b>Participate Now</b></button>}
     
-
-   
     
-   
     </div>
     </div>
-    <div className="problemStatement">
-     
-     <button>View Problem</button>
-   </div>
-   
     </section>
      
         <section class="challenge-details">

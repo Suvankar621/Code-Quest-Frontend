@@ -1,15 +1,13 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import "./HackethonCard.css"
 import { Link } from 'react-router-dom'
-import { Context } from '../../Context'
+
 
 const HackethonCard = ({id,title,startTime}) => {
-  const {setctitle}=useContext(Context);
+ 
   const storedRegistrationStatus = localStorage.getItem(`registrationStatus_${id}`);
 
- useEffect(() => {
-  setctitle(title);
- }, [title, setctitle])
+
  
   return (
     <div class="event-card">
