@@ -2,6 +2,7 @@ import React, {  useState } from 'react';
 import { useParams } from 'react-router-dom';
 import './Submission.css';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 const Submission = () => {
@@ -32,11 +33,13 @@ const Submission = () => {
         },
         withCredentials: true
     });
-    console.log(data.message)
+    toast.success(data.message)
+
 
     
     } catch (err) {
-        console.log(err.response.data.message)
+        toast.error(err.response.data.message);
+      
     }
   };
 
@@ -48,7 +51,7 @@ const Submission = () => {
         <h2>Submit Your Work</h2>
         <form id="submissionForm" onSubmit={handleSubmit} encType="multipart/form-data">
           <div className="form-group">
-            <h3>Q) jbjdsjdsjhdshhhhhhhhhhhhhhhhhhhhh</h3>
+            <h3>Q) jbjdsjdsjhdshhhhhhhhhhhhhhhhhhhhh Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum et doloremque illum beatae dignissimos, nam reiciendis accusantium debitis ipsam neque. Quis, totam aliquam in quasi adipisci eligendi dignissimos dolore. Officiis esse illo quia, eligendi odio repellat commodi aliquam porro iusto, tenetur recusandae. Facere, incidunt nemo odio unde consectetur deserunt a?</h3>
           </div>
           <div className="form-group">
             <label className="label1" htmlFor="submissionMessage">Write Your Answer Here:</label>
