@@ -1,4 +1,4 @@
-import React, {  useContext, useEffect, useState } from 'react'
+import React, {  useContext, useEffect } from 'react'
 import "./EventPage.css"
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 
 const EventPage = () => {
-  const [contest,setcontest]=useState([]);
+  const {contest,setcontest}=useContext(Context);
   const {user}=useContext(Context);
 
   const {id}=useParams();
@@ -47,10 +47,11 @@ const EventPage = () => {
    }).catch(()=>{
     setcontest([])
    })
-   
+
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
  
-  console.log(contest)
+  // console.log(contest)
   return (
     <>
  

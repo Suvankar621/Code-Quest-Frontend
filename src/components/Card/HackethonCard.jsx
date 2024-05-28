@@ -1,14 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import "./HackethonCard.css"
 import { Link } from 'react-router-dom'
+import { Context } from '../../Context';
 
 
 const HackethonCard = ({id,title,startTime}) => {
- 
-  const storedRegistrationStatus = localStorage.getItem(`registrationStatus_${id}`);
+  const {contest}=useContext(Context);
 
-
- 
   return (
     <div class="event-card">
             <img src="Images/event_img.png" alt="The Hacker"/>
@@ -21,7 +19,7 @@ const HackethonCard = ({id,title,startTime}) => {
                 <h6>{startTime}  IST (Asia/Kolkata)</h6>
               
 
-                {storedRegistrationStatus === "true"? <Link to={`/event/${id}`}><button class="register-button ">ENTER NOW</button></Link>: <Link to={`/event/${id}`}><button class="register-button">REGISTER</button></Link>}
+                {contest? <Link to={`/event/${id}`}><button class="register-button ">ENTER NOW</button></Link>: <Link to={`/event/${id}`}><button class="register-button">REGISTER</button></Link>}
                
             </div>
     </div>

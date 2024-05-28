@@ -21,6 +21,7 @@ function App() {
   const [isAuthenticated,setisAuthenticated]=useState(false)
   const [isLoader,setisLoader]=useState(false);
   const [user,setUser]=useState({});
+  const [contest,setcontest]=useState([]);
   
 
  
@@ -40,7 +41,7 @@ function App() {
   
 
   return (
-   <Context.Provider value={{isAuthenticated,setisAuthenticated,isLoader,setisLoader,user,setUser}}>
+   <Context.Provider value={{isAuthenticated,setisAuthenticated,isLoader,setisLoader,user,setUser,contest,setcontest}}>
     
     <div className='App'>
     <ToastContainer/>
