@@ -93,11 +93,6 @@ if(isLoader){
             <br />
         </div>
         
-       
-           
-           
-            <input type="checkbox" id='checkbox' /> 
-            <span >Forget Password</span><br />
 
             <button className='btnn' type='submit' >Sign up</button>
         </form>
