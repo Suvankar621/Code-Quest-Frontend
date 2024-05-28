@@ -59,6 +59,8 @@ const EventPage = () => {
    })
    if(contest.registeredUsers && contest.registeredUsers.includes(user._id)){
     setisRegistered(true)
+  }else{
+    setisRegistered(false)
   }
      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
