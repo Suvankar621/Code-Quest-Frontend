@@ -22,7 +22,7 @@ function App() {
   const [isLoader,setisLoader]=useState(false);
   const [user,setUser]=useState({});
   const [contest,setcontest]=useState([]);
-  const [isRegistered,setisRegistered]=useState(false)
+  // const [isRegistered,setisRegistered]=useState(false)
   
 
  
@@ -41,10 +41,10 @@ function App() {
 
           // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  console.log(isRegistered,contest)
+ 
 
   return (
-   <Context.Provider value={{isAuthenticated,setisAuthenticated,isLoader,setisLoader,user,setUser,contest,setcontest,isRegistered,setisRegistered}}>
+   <Context.Provider value={{isAuthenticated,setisAuthenticated,isLoader,setisLoader,user,setUser,contest,setcontest}}>
     
     <div className='App'>
     <ToastContainer/>
