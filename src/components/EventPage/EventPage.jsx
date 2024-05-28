@@ -1,4 +1,4 @@
-import React, {  useContext, useEffect } from 'react'
+import React, {  useContext, useEffect, useState } from 'react'
 import "./EventPage.css"
 import { useParams } from 'react-router-dom'
 import axios from 'axios';
@@ -10,7 +10,8 @@ import Submission from '../Submission/Submission';
 
 const EventPage = () => {
   const now=new Date();
-  const {isRegistered,setisRegistered}=useContext(Context);
+  // const {isRegistered,setisRegistered}=useContext(Context);
+  const [isRegistered,setisRegistered]=useState(false)
   // const [isApplied,setisRegistered]=useState(false)
   const {contest,setcontest}=useContext(Context);
   const {user}=useContext(Context);
@@ -39,7 +40,7 @@ const EventPage = () => {
   }).catch((e)=>{
    
     console.log(e.response.data.message)
-    toast.success(e.response.data.message)
+    toast.error(e.response.data.message)
  
   });
   

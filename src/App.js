@@ -38,8 +38,10 @@ function App() {
         setisAuthenticated(false)
        
       })
+
+          // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-  
+  console.log(isRegistered,contest)
 
   return (
    <Context.Provider value={{isAuthenticated,setisAuthenticated,isLoader,setisLoader,user,setUser,contest,setcontest,isRegistered,setisRegistered}}>
