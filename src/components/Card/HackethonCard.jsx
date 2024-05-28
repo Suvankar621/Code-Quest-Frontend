@@ -5,7 +5,10 @@ import { Context } from '../../Context';
 
 
 const HackethonCard = ({id,title,startTime}) => {
-  const {contest}=useContext(Context);
+  // const {contest}=useContext(Context);
+  const StartTime = new Date(startTime);
+  const {isRegistered}=useContext(Context);
+  
 
   return (
     <div class="event-card">
@@ -16,10 +19,10 @@ const HackethonCard = ({id,title,startTime}) => {
                 <h3>{title}</h3>
                 <p>Hosted by CodeQuest</p>
                 <h5>STARTS ON</h5>
-                <h6>{startTime}  IST (Asia/Kolkata)</h6>
+                <h6>{StartTime.toLocaleString()}  IST (Asia/Kolkata)</h6>
               
 
-                {contest? <Link to={`/event/${id}`}><button class="register-button ">ENTER NOW</button></Link>: <Link to={`/event/${id}`}><button class="register-button">REGISTER</button></Link>}
+                {isRegistered? <Link to={`/event/${id}`}><button class="register-button ">ENTER NOW</button></Link>: <Link to={`/event/${id}`}><button class="register-button">REGISTER</button></Link>}
                
             </div>
     </div>

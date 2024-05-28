@@ -4,12 +4,19 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios';
 import { Context } from '../../Context';
 import { toast } from 'react-toastify';
+import Submission from '../Submission/Submission';
 
 
 
 const EventPage = () => {
+  const now=new Date();
+  const {isRegistered,setisRegistered}=useContext(Context);
+  // const [isApplied,setisRegistered]=useState(false)
   const {contest,setcontest}=useContext(Context);
   const {user}=useContext(Context);
+  const startTime = new Date(contest.startTime);
+  const endTime = new Date(contest.endTime);
+
 
   const {id}=useParams();
   console.log(id)
@@ -25,10 +32,12 @@ const EventPage = () => {
 
      } // Configuration object
   ).then((res)=>{
+    setisRegistered(true)
     toast.success(res.data.message)
     console.log(res.data.message);
 
   }).catch((e)=>{
+   
     console.log(e.response.data.message)
     toast.success(e.response.data.message)
  
@@ -43,14 +52,17 @@ const EventPage = () => {
       "Content-Type": "application/json"
   },
    }).then((res)=>{
+  
     setcontest(res.data.contest);
    }).catch(()=>{
     setcontest([])
    })
-
+   if(contest.registeredUsers && contest.registeredUsers.includes(user._id)){
+    setisRegistered(true)
+  }
      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
- 
+console.log(isRegistered)
   // console.log(contest)
   return (
     <>
@@ -64,17 +76,19 @@ const EventPage = () => {
     <h2>{contest.title}</h2>
     <span class="team-info">Allowed Individuals</span>
     <p>Hosted by CodeQuest</p>
-    <p><b>Opens on: {contest.startTime} IST (Asia/Kolkata)</b></p>
-    <p><b>Closes on: {contest.endTime} IST (Asia/Kolkata)</b></p>
+    <p><b>Opens on: {startTime.toLocaleString()} IST (Asia/Kolkata)</b></p>
+    <p><b>Closes on: {endTime.toLocaleString()} IST (Asia/Kolkata)</b></p>
     </div>
     <div class="cta-buttonss">
-      {contest.registeredUsers && contest.registeredUsers.includes(user._id) ?<button class="cta-buttons_applied disabled" disabled ><b>Applied</b></button>:<button class="cta-buttons" onClick={registerContest}><b>Participate Now</b></button>}
+      {isRegistered ?<button class="cta-buttons_applied disabled" disabled ><b>Applied</b></button>:<button class="cta-buttons" onClick={registerContest}><b>Participate Now</b></button>}
     
     
     </div>
     </div>
+ 
     </section>
-     
+    {now >= startTime && now <= endTime && isRegistered?<Submission/>:null}
+    
         <section class="challenge-details">
     <div class="containers">
     <h3>About Challenge</h3>

@@ -4,11 +4,12 @@ import HackethonCard from '../Card/HackethonCard'
 import axios from 'axios'
 
 
+
 const Main = () => {
   
   const [contests,setcontests]=useState([]);
   
-
+  
  
   useEffect(() => {
     axios.get("https://code-quest-backend.onrender.com/api/v1/contest/getcontests",{
@@ -42,7 +43,7 @@ const Main = () => {
         <h3>CHALLENGES</h3>
         <div className="card_items">
           {contests.map((e)=>(
-            <HackethonCard id={e._id} title={e.title} startTime={e.startTime}/>
+            <HackethonCard id={e._id} title={e.title} startTime={e.startTime.toLocaleString()}/>
             
         
           ))}
