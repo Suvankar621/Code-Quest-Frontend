@@ -56,15 +56,22 @@ const EventPage = () => {
   
     setcontest(res.data.contest);
    }).catch(()=>{
-    setcontest([])
+    setcontest(null)
    })
-   if(contest.registeredUsers && contest.registeredUsers.includes(user._id)){
-    setisRegistered(true)
-  }else{
-    setisRegistered(false)
-  }
+
      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id])
+
+  useEffect(() => {
+    if (contest && contest.registeredUsers) {
+      if (contest.registeredUsers.includes(user._id)) {
+        setisRegistered(true);
+      } else {
+        setisRegistered(false);
+      }
+    }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contest, user._id]);
 console.log(isRegistered)
   // console.log(contest)
   return (
