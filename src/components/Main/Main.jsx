@@ -1,14 +1,15 @@
-import React, {  useEffect, useState } from 'react'
+import React, {   useEffect, useState } from 'react'
 import "./Main.css"
 import HackethonCard from '../Card/HackethonCard'
 import axios from 'axios'
 
 
 
+
 const Main = () => {
   
   const [contests,setcontests]=useState([]);
-  
+
   
  
   useEffect(() => {
@@ -23,7 +24,7 @@ const Main = () => {
    
     
   }, [])
-  
+
   console.log(contests)
   return (
     <>
@@ -44,7 +45,7 @@ const Main = () => {
         <h3>CHALLENGES</h3>
         <div className="card_items">
           {contests.map((e)=>(
-            <HackethonCard id={e._id} title={e.title} startTime={e.startTime.toLocaleString()}/>
+            <HackethonCard id={e._id} title={e.title} startTime={e.startTime.toLocaleString()} />
             
         
           ))}

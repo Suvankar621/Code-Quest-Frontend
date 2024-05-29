@@ -1,13 +1,37 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import "./HackethonCard.css"
 import { Link } from 'react-router-dom'
 import { Context } from '../../Context';
+import axios from 'axios';
+
 
 
 const HackethonCard = ({id,title,startTime}) => {
-  // const {contest}=useContext(Context);
+  const [isReg,setisReg]=useState(false);
+  const {contest,user}=useContext(Context);
+
+  useEffect(() => {
+    axios.get(`https://code-quest-backend.onrender.com/api/v1/contest/getcontest/${id}`,{
+      withCredentials: true,
+      headers: {
+        "Content-Type": "application/json"
+    },
+     }).then((res)=>{
+      if (res.data && res.data.contest.registeredUsers) {
+        if (res.data.contest.registeredUsers.includes(user._id)) {
+          setisReg(true);
+        } else{
+          setisReg(false)
+        }
+      }
+    
+     }).catch(()=>{
+      setisReg(false)
+     })
+
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contest, user._id]);
   const StartTime = new Date(startTime);
-  const {isRegistered}=useContext(Context);
   
 
   return (
@@ -22,7 +46,7 @@ const HackethonCard = ({id,title,startTime}) => {
                 <h6>{StartTime.toLocaleString()}  IST (Asia/Kolkata)</h6>
               
 
-                {isRegistered? <Link to={`/event/${id}`}><button class="register-button ">ENTER NOW</button></Link>: <Link to={`/event/${id}`}><button class="register-button">REGISTER</button></Link>}
+                {isReg? <Link to={`/event/${id}`}><button class="register-button ">ENTER NOW</button></Link>: <Link to={`/event/${id}`}><button class="register-button">REGISTER</button></Link>}
                
             </div>
     </div>
