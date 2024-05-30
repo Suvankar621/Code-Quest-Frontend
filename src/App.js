@@ -1,67 +1,84 @@
-
-import './App.css';
-import {BrowserRouter,Routes,Route} from "react-router-dom"
-import Navbar from './components/Navbar/Navbar';
-import Login from './components/Auth Page/Login/Login';
-import Register from './components/Auth Page/Register/Register';
-import Hero from './components/Hero/Hero';
-import Main from './components/Main/Main';
-import { ToastContainer } from 'react-toastify';
-import { Context } from './Context';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import EventPage from './components/EventPage/EventPage';
-
-
-
-
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
+import Login from "./components/Auth Page/Login/Login";
+import Register from "./components/Auth Page/Register/Register";
+import Hero from "./components/Hero/Hero";
+import Main from "./components/Main/Main";
+import { ToastContainer } from "react-toastify";
+import { Context } from "./Context";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import EventPage from "./components/EventPage/EventPage";
+import Judge from "./components/Judge Page/Judge";
+import Dashboard from "./components/Admin Panel/Dashboard";
+import CreateContest from "./components/Admin Panel/CreateContest";
 
 function App() {
-  
-  const [isAuthenticated,setisAuthenticated]=useState(false)
-  const [isLoader,setisLoader]=useState(false);
-  const [user,setUser]=useState({});
-  const [contest,setcontest]=useState([]);
+  const [isAuthenticated, setisAuthenticated] = useState(false);
+  const [isLoader, setisLoader] = useState(false);
+  const [user, setUser] = useState({});
+  const [contest, setcontest] = useState([]);
   // const [isRegistered,setisRegistered]=useState(false)
-  
 
- 
   useEffect(() => {
-      axios.get("https://code-quest-backend.onrender.com/api/v1/users/me",
-      {
-        
-      withCredentials: true
-      }).then((res)=>{
-        setUser(res.data.user)
-        setisAuthenticated(true);
-      }).catch(()=>{
-        setisAuthenticated(false)
-       
+    axios
+      .get("https://code-quest-backend.onrender.com/api/v1/users/me", {
+        withCredentials: true,
       })
+      .then((res) => {
+        setUser(res.data.user);
+        setisAuthenticated(true);
+      })
+      .catch(() => {
+        setisAuthenticated(false);
+      });
 
-          // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
- 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
+  console.log(user.role === "Judge");
   return (
-   <Context.Provider value={{isAuthenticated,setisAuthenticated,isLoader,setisLoader,user,setUser,contest,setcontest}}>
-    
-    <div className='App'>
-    <ToastContainer/>
-    <BrowserRouter>
-  
-      <Navbar/>
-     
-      <Routes>
-        {isAuthenticated?<Route path='/' element={<Main />} />:<Route path='/' element={<Hero />} />}
-        {/* <Route path='/' element={<Hero/>} /> */}
-        
-        <Route path='/login' element={<Login/>} />
-        <Route path='/register' element={<Register/>} />
-        <Route path='/event/:id' element={<EventPage/>} />
-    </Routes>
-    </BrowserRouter>
-    </div>
+    <Context.Provider
+      value={{
+        isAuthenticated,
+        setisAuthenticated,
+        isLoader,
+        setisLoader,
+        user,
+        setUser,
+        contest,
+        setcontest,
+      }}
+    >
+      <div className="App">
+        <ToastContainer />
+        <BrowserRouter>
+          <Navbar />
+
+          <Routes>
+            {isAuthenticated ? (
+              user.role === "Participants" ? (
+                <Route path="/" element={<Main />} />
+              ) : user.role === "Judge" ? (
+                <Route path="/" element={<Judge />} />
+              ) :user.role === "Organizer" ? (
+                <Route path="/" element={<Dashboard />} />
+              ) : (
+                <Route path="/" element={<Hero />} />
+              )
+            ) : (
+              <Route path="/" element={<Hero />} />
+            )}
+            {/* <Route path='/' element={<Hero/>} /> */}
+
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/event/:id" element={<EventPage />} />
+            {/* <Route path="/create" element={<CreateContest />} /> */}
+          </Routes>
+        </BrowserRouter>
+      </div>
     </Context.Provider>
   );
 }

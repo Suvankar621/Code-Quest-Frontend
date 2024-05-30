@@ -1,0 +1,80 @@
+.judge-panel {
+    padding: 40px 0;
+    background-color: #fff;
+}
+ 
+.judge-panel .container {
+    width: 90%;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 20px;
+}
+ 
+.judge-panel h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: #4a90e2;
+}
+ 
+.submission-list .submission {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: box-shadow 0.3s ease;
+}
+ 
+.submission-list .submission:hover {
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+ 
+.submission h3 {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #333;
+}
+ 
+.submission-message {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #555;
+}
+ 
+.score-form {
+    display: flex;
+    align-items: center;
+}
+ 
+.score-form label {
+    font-size: 18px;
+    margin-right: 10px;
+}
+ 
+.score-form input {
+    width: 80px;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+ 
+.score-form button {
+    padding: 10px 15px;
+    font-size: 16px;
+    background-color: #068932;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+ 
+.score-form button:hover {
+    background-color: #357ABD;
+}
