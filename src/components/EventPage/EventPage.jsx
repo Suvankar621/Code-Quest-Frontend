@@ -72,7 +72,7 @@ const EventPage = () => {
     }
      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [contest, user._id]);
-console.log(isRegistered)
+
   // console.log(contest)
   return (
     <>
@@ -97,7 +97,7 @@ console.log(isRegistered)
     </div>
  
     </section>
-    {now >= startTime && now <= endTime && isRegistered?<Submission/>:null}
+    {(now >= startTime && now <= endTime) && isRegistered?<Submission/>:null}
     
         <section class="challenge-details">
     <div class="containers">
