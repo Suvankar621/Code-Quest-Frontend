@@ -86,9 +86,9 @@ if(isLoader){
                 required
             >
               <option value="" disabled hidden> None</option>
-              <option value="participants">Participants</option>
-              <option value="organizer">Organizer</option>
-              <option value="judge">Judge</option>
+              <option value="Participants">Participants</option>
+              <option value="Organizer">Organizer</option>
+              <option value="Judge">Judge</option>
             </select>
             <br />
         </div>
