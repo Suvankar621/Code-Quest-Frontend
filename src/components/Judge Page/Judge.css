@@ -1,6 +1,11 @@
 .judge-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     padding: 40px 0;
     background-color: #fff;
+    gap: 10px;
 }
  
 .judge-panel .container {

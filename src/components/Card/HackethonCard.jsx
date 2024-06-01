@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 
-const HackethonCard = ({id,title,startTime}) => {
+const HackethonCard = ({id,title,startTime,isAdmin,isJudge}) => {
   const [isReg,setisReg]=useState(false);
   const {contest,user}=useContext(Context);
 
@@ -33,7 +33,7 @@ const HackethonCard = ({id,title,startTime}) => {
   }, [contest, user._id]);
   const StartTime = new Date(startTime);
   
-
+console.log(isJudge)
   return (
     <div class="event-card">
             <img src="Images/event_img.png" alt="The Hacker"/>
@@ -45,8 +45,24 @@ const HackethonCard = ({id,title,startTime}) => {
                 <h5>STARTS ON</h5>
                 <h6>{StartTime.toLocaleString()}  IST (Asia/Kolkata)</h6>
               
-
-                {isReg? <Link to={`/event/${id}`}><button class="register-button ">ENTER NOW</button></Link>: <Link to={`/event/${id}`}><button class="register-button">REGISTER</button></Link>}
+                {isAdmin ? (
+  <Link to={`/create`}>
+    <button className="register-button">Created</button>
+  </Link>
+) : isReg && !isJudge ? (
+  <Link to={`/event/${id}`}>
+    <button className="register-button">ENTER NOW</button>
+  </Link>
+): isJudge ? (
+  <Link to={`/solutions/${id}`}>
+    <button className="register-button">Show Solutions</button>
+  </Link>
+) : (
+  <Link to={`/event/${id}`}>
+    <button className="register-button">REGISTER</button>
+  </Link>
+)}
+                {/* {isReg? <Link to={`/event/${id}`}><button class="register-button ">ENTER NOW</button></Link>: <Link to={`/event/${id}`}><button class="register-button">REGISTER</button></Link>} */}
                
             </div>
     </div>

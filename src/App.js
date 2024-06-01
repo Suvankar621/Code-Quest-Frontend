@@ -13,12 +13,15 @@ import EventPage from "./components/EventPage/EventPage";
 import Judge from "./components/Judge Page/Judge";
 import Dashboard from "./components/Admin Panel/Dashboard";
 import CreateContest from "./components/Admin Panel/CreateContest";
+import Leaderboard from "./components/Admin Panel/Leaderboard";
+import SolutionsPage from "./components/Judge Page/SolutionsPage";
 
 function App() {
   const [isAuthenticated, setisAuthenticated] = useState(false);
   const [isLoader, setisLoader] = useState(false);
   const [user, setUser] = useState({});
   const [contest, setcontest] = useState([]);
+
   // const [isRegistered,setisRegistered]=useState(false)
 
   useEffect(() => {
@@ -49,6 +52,7 @@ function App() {
         setUser,
         contest,
         setcontest,
+
       }}
     >
       <div className="App">
@@ -75,7 +79,11 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/event/:id" element={<EventPage />} />
-            {/* <Route path="/create" element={<CreateContest />} /> */}
+            <Route path="/create" element={<CreateContest />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />solutions
+            <Route path="/solutions/:id" element={<SolutionsPage />} />
+            
           </Routes>
         </BrowserRouter>
       </div>

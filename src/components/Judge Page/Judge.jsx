@@ -1,33 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import "./Judge.css"
+import HackethonCard from '../Card/HackethonCard'
+import axios from 'axios';
 const Judge = () => {
+    const isJudge=true;
+    const [contests, setContests] = useState([]);
+
+  useEffect(() => {
+    const fetchContests = async () => {
+      try {
+        const response = await axios.get('https://code-quest-backend.onrender.com/api/v1/contest/getcontests',{
+            withCredentials: true
+          });
+        setContests(response.data.contests); // Assuming the contests are returned as an array in the 'contests' property
+      } catch (error) {
+        console.error('Error fetching contests:', error);
+      }
+    };
+
+    fetchContests();
+  }, []);
   return (
-    <section class="judge-panel">
-        <div class="container">
-            <h2>Answer Submissions</h2>
-            <div class="submission-list">
-                <div class="submission">
-                    <h3>Sudipto Paul</h3>
-                    <p class="submission-message">Our project aims to revolutionize the way we approach healthcare by integrating AI technology...</p>
-                    <form class="score-form">
-                        <label for="scoreAlpha">Score:</label>
-                        <input type="number" id="scoreAlpha" name="scoreAlpha" min="0" max="100" required/>
-                        <button type="submit">Submit Score</button>
-                    </form>
-                </div>
-                <div class="submission">
-                    <h3>Suman Saha</h3>
-                    <p class="submission-message">Our project focuses on improving urban mobility through the development of a new app...</p>
-                    <form class="score-form">
-                        <label for="scoreBeta">Score:</label>
-                        <input type="number" id="scoreBeta" name="scoreBeta" min="0" max="100" required/>
-                        <button type="submit">Submit Score</button>
-                    </form>
-                </div>
-              
-            </div>
-        </div>
-    </section>
+    <section className="judge-panel">
+    {contests.map(contest => (
+      <HackethonCard id={contest._id} title={contest.title} startTime={contest.startTime} isJudge={isJudge} />
+    ))}
+  </section>
   )
 }
 

@@ -1,0 +1,112 @@
+/* Contest.css */
+.createContest{
+    position: absolute;
+    margin-top: -55vmax;
+}
+.create-button {
+
+    margin-left: 90vmax;
+    padding: 10px 20px;
+    font-size: 16px;
+    /* margin: 20px; */
+    cursor: pointer;
+
+  }
+  
+  .modal {
+ 
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 500px;
+    margin: auto;
+
+  }
+  
+  .overlay {
+    background: rgba(0, 0, 0, 0.75);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: scroll;
+  }
+  
+  .modal-title {
+    margin-bottom: 20px;
+  }
+  
+  .form {
+    display: flex;
+    flex-direction: column;
+    padding: 1vmax;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  .form-input,
+  .form-textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .form-textarea {
+    height: 100px;
+    resize: vertical;
+  }
+  
+  .form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  .submit-button,
+  .cancel-button {
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .submit-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .cancel-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 4px;
+  }
+  .contest-list{
+    overflow-y: scroll;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 80%;
+    height: 500px;
+   margin-top: -45vmax;
+   margin-left: auto;
+   /* background-color: black; */
+  }
+  .contest-card{
+    margin: 1vmax;
+  }
