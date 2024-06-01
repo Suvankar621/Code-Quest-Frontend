@@ -3,17 +3,11 @@ import axios from 'axios';
 import Modal from 'react-modal';
 import "./CreateContest.css"
 import Dashboard from './Dashboard';
-
 import HackethonCard from '../Card/HackethonCard';
 import { toast } from 'react-toastify';
 
 const CreateContest = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [title,settitle]=useState("")
-  const [question,setquestion]=useState("")
-  const [startTime,setstartTime]=useState("")
-  const [endTime,setendTime]=useState("")
-  const isAdmin=true;
   const [formData, setFormData] = useState({
     title: '',
     startDate: '',
@@ -23,6 +17,8 @@ const CreateContest = () => {
     question: ''
   });
   const [contests, setContests] = useState([]);
+  const isAdmin = true;
+
   useEffect(() => {
     const fetchContests = async () => {
       try {
@@ -51,39 +47,41 @@ const CreateContest = () => {
       ...formData,
       [name]: value
     });
-    settitle(formData.title)
-    setquestion(formData.question)
-    setstartTime(`${formData.startDate}T${formData.startTime}`)
-    setendTime(`${formData.endDate}T${formData.endTime}`)
   };
 
-  console.log(title,question,startTime,endTime)
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const startTime = new Date(`${formData.startDate}T${formData.startTime}`);
+    const endTime = new Date(`${formData.endDate}T${formData.endTime}`);
+
+    const contestData = {
+      title: formData.title,
+      question: formData.question,
+      startTime: startTime.toISOString(),
+      endTime: endTime.toISOString()
+    };
 
     try {
-      const {data} = await axios.post('https://code-quest-backend.onrender.com/api/v1/contest/create',   { title,question,startTime,endTime},
-      {
-          headers: {
-              "Content-Type": "application/json"
-          },
-          withCredentials: true
+      const { data } = await axios.post('https://code-quest-backend.onrender.com/api/v1/contest/create', contestData, {
+        headers: {
+          "Content-Type": "application/json"
+        },
+        withCredentials: true
       });
       console.log('Contest created:', data.message);
-      toast.success(data.message)
+      toast.success(data.message);
       closeModal();
     } catch (error) {
-      toast.error(error.response.data.message)
+      toast.error(error.response.data.message);
       console.error('There was an error creating the contest!', error);
     }
   };
+
   console.log(contests)
 
   return (
     <>
-  
       <Dashboard />
-
       <div className='createContest'>
         <button className="create-button" onClick={openModal}>Create</button>
         <Modal isOpen={modalIsOpen} onRequestClose={closeModal} contentLabel="Create Contest" className="modal" overlayClassName="overlay">
@@ -123,8 +121,8 @@ const CreateContest = () => {
       <div className="contest-list">
         {contests.map((contest, index) => (
           <div key={index} className="contest-card">
-           <HackethonCard id={contest._id} title={contest.title} startTime={contest.startTime} isAdmin={isAdmin}/>
-           </div>
+            <HackethonCard id={contest._id} title={contest.title} startTime={contest.startTime} isAdmin={isAdmin} />
+          </div>
         ))}
       </div>
     </>
