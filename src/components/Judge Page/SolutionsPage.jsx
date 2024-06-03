@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const SolutionsPage = () => {
   const [submissions, setSubmissions] = useState([]);
-  const [scores, setScores] = useState({});
+  const [scores, setScores] = useState();
   const { id } = useParams();
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const SolutionsPage = () => {
                 <label htmlFor={`score-${submission._id}`}>Score:</label>
                 <input
                   type="number"
-                  value={submission.score|| ''}
+                  value={submission.score}
                   id={`score-${submission._id}`}
                   name={`score-${submission._id}`}
                   min="0"
