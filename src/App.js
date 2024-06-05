@@ -36,9 +36,7 @@ function App() {
       .catch(() => {
         setisAuthenticated(false);
       });
-      if(!isAuthenticated){
-        return <Navigate to={"/"}/>
-      }
+  
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
@@ -62,14 +60,13 @@ function App() {
         <ToastContainer />
         <BrowserRouter>
           <Navbar />
-
           <Routes>
             {isAuthenticated ? (
               user.role === "Participants" ? (
                 <Route path="/" element={<Main />} />
               ) : user.role === "Judge" ? (
                 <Route path="/" element={<Judge />} />
-              ) :user.role === "Organizer" ? (
+              ) : user.role === "Organizer" ? (
                 <Route path="/" element={<Dashboard />} />
               ) : (
                 <Route path="/" element={<Hero />} />
@@ -77,19 +74,30 @@ function App() {
             ) : (
               <Route path="/" element={<Hero />} />
             )}
-            {/* <Route path='/' element={<Hero/>} /> */}
-
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/event/:id" element={<EventPage />} />
-            {isAuthenticated?<Route path="/create" element={<CreateContest />} />:<Route path="/" element={<Hero />} />}
-            {isAuthenticated?<Route path="/leaderboard" element={<Leaderboard />} />:<Route path="/" element={<Hero />} />}
-            {isAuthenticated? <Route path="/dashboard" element={<Dashboard />} />:<Route path="/" element={<Hero />} />}
-
-            {isAuthenticated?<Route path="/solutions/:id" element={<SolutionsPage />} />:<Route path="/" element={<Hero />} />}
-            
-            
-            
+            {isAuthenticated ? (
+              <Route path="/create" element={<CreateContest />} />
+            ) : (
+              <Route path="/" element={<Hero />} />
+            )}
+            {isAuthenticated ? (
+              <Route path="/leaderboard" element={<Leaderboard />} />
+            ) : (
+              <Route path="/" element={<Hero />} />
+            )}
+            {isAuthenticated ? (
+              <Route path="/dashboard" element={<Dashboard />} />
+            ) : (
+              <Route path="/" element={<Hero />} />
+            )}
+            {isAuthenticated ? (
+              <Route path="/solutions/:id" element={<SolutionsPage />} />
+            ) : (
+              <Route path="/" element={<Hero />} />
+            )}
+            {!isAuthenticated && <Route path="*" element={<Navigate to="/" replace />} />}
           </Routes>
         </BrowserRouter>
       </div>
