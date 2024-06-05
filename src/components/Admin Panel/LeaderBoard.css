@@ -1,6 +1,12 @@
 .contest-lists{
+    margin-top: -55vmax;
+    margin-left: 20vmax;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    overflow-y: scroll;
+    height: 86vh;
+ 
+
 }

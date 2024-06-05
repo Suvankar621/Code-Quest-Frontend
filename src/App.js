@@ -88,11 +88,11 @@ function App() {
             ) : (
               <Route path="/" element={<Hero />} />
             )}
-            {/* {isAuthenticated ? (
+            {isAuthenticated ? (
               <Route path="/dashboard" element={<Dashboard />} />
             ) : (
               <Route path="/" element={<Hero />} />
-            )} */}
+            )}
             {isAuthenticated ? (
               <Route path="/solutions/:id" element={<SolutionsPage />} />
             ) : (

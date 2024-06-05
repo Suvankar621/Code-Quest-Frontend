@@ -4,6 +4,7 @@ import "./LeaderBoard.css"
 
 import axios from 'axios';
 import HackethonCard from '../Card/HackethonCard';
+import Dashboard from './Dashboard';
 
 const LeaderboardPage = () => {
   const [contests,setContests]=useState([]);
@@ -26,6 +27,8 @@ const LeaderboardPage = () => {
   }, [contests]);
   console.log(contests)
   return (
+    <>
+    <Dashboard/>
     <div className="contest-lists">
     {contests.map((contest, index) => (
       <div key={index} className="contest-card">
@@ -33,6 +36,7 @@ const LeaderboardPage = () => {
       </div>
     ))}
   </div>
+  </>
   )
 }
 

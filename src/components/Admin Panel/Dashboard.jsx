@@ -12,7 +12,9 @@ if(!isAuthenticated){
   return <Navigate to={"/"} />
 }
   return (
-    <div className="App">
+   
+   
+    <div className="Apps">
         <ToastContainer/>
       <div className="nav-buttons">
       <Link to={"/dashboard"}  >Dashboard</Link>
@@ -21,9 +23,10 @@ if(!isAuthenticated){
         <Link to={"/leaderboard"} >Leaderboard</Link>
       </div>
       <div className="component-container">
-      hii
+      {/* Content TODO */}
       </div>
     </div>
+  
   )
 }
 
