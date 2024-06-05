@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./components/Auth Page/Login/Login";
 import Register from "./components/Auth Page/Register/Register";
@@ -36,9 +36,12 @@ function App() {
       .catch(() => {
         setisAuthenticated(false);
       });
+      if(!isAuthenticated){
+        return <Navigate to={"/"}/>
+      }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isAuthenticated]);
 
   console.log(user.role === "Judge");
   return (
@@ -79,10 +82,13 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/event/:id" element={<EventPage />} />
-            <Route path="/create" element={<CreateContest />} />
-            <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/dashboard" element={<Dashboard />} />solutions
-            <Route path="/solutions/:id" element={<SolutionsPage />} />
+            {isAuthenticated?<Route path="/create" element={<CreateContest />} />:<Route path="/" element={<Hero />} />}
+            {isAuthenticated?<Route path="/leaderboard" element={<Leaderboard />} />:<Route path="/" element={<Hero />} />}
+            {isAuthenticated? <Route path="/dashboard" element={<Dashboard />} />:<Route path="/" element={<Hero />} />}
+
+            {isAuthenticated?<Route path="/solutions/:id" element={<SolutionsPage />} />:<Route path="/" element={<Hero />} />}
+            
+            
             
           </Routes>
         </BrowserRouter>

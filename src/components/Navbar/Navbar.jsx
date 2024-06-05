@@ -34,6 +34,7 @@ const Navbar = () => {
 if(isLoader){
   return <Loading/>
 }
+
   return (
     <div className="navbar">
       <h1>CodeQuest</h1>
