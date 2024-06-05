@@ -5,7 +5,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Context } from '../../Context';
 
-const Submission = () => {
+const Submission = ({question}) => {
   const { user } = useContext(Context); // Ensure user context is available
   const { id } = useParams();
   const [answer, setAnswer] = useState("");
@@ -78,7 +78,7 @@ const Submission = () => {
             <h2>Submit Your Work</h2>
             <form id="submissionForm" onSubmit={handleSubmit} encType="multipart/form-data">
               <div className="form-group">
-                <h3>Q) Please provide the question here...</h3>
+                <h3>Q) {question}</h3>
               </div>
               <div className="form-group">
                 <label className="label1" htmlFor="submissionMessage">Write Your Answer Here:</label>
