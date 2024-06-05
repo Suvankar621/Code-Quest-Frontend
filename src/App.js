@@ -13,8 +13,9 @@ import EventPage from "./components/EventPage/EventPage";
 import Judge from "./components/Judge Page/Judge";
 import Dashboard from "./components/Admin Panel/Dashboard";
 import CreateContest from "./components/Admin Panel/CreateContest";
-import Leaderboard from "./components/Admin Panel/Leaderboard";
 import SolutionsPage from "./components/Judge Page/SolutionsPage";
+import LeaderboardPage from "./components/Admin Panel/LeaderboardPage";
+import LeaderBoard from "./components/LeaderBoard/LeaderBoard";
 
 function App() {
   const [isAuthenticated, setisAuthenticated] = useState(false);
@@ -83,7 +84,7 @@ function App() {
               <Route path="/" element={<Hero />} />
             )}
             {isAuthenticated ? (
-              <Route path="/leaderboard" element={<Leaderboard />} />
+              <Route path="/leaderboard" element={<LeaderboardPage />} />
             ) : (
               <Route path="/" element={<Hero />} />
             )}
@@ -97,6 +98,12 @@ function App() {
             ) : (
               <Route path="/" element={<Hero />} />
             )}
+            {isAuthenticated ? (
+              <Route path="/lead/:id" element={<LeaderBoard />} />
+            ) : (
+              <Route path="/" element={<Hero />} />
+            )}
+         
             {!isAuthenticated && <Route path="*" element={<Navigate to="/" replace />} />}
           </Routes>
         </BrowserRouter>

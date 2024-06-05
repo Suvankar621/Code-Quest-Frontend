@@ -1,0 +1,45 @@
+.leaderboard {
+    padding: 40px 0;
+    background-color: #fff;
+}
+ 
+.leaderboard .container {
+    width: 90%;
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    padding: 20px;
+}
+ 
+.leaderboard h2 {
+    text-align: center;
+    font-size: 32px;
+    margin-bottom: 40px;
+    color: #4a90e2;
+}
+ 
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+ 
+table thead {
+    background-color: #4a90e2;
+    color: #fff;
+}
+ 
+table th, table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+ 
+table tr:nth-child(even) {
+    background-color: #f4f4f9;
+}
+ 
+table tr:hover {
+    background-color: #e1e7f1;
+}

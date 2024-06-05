@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 
-const HackethonCard = ({id,title,startTime,isAdmin,isJudge}) => {
+const HackethonCard = ({id,title,startTime,isAdmin,isJudge,isLeaderboard}) => {
   const [isReg,setisReg]=useState(false);
   const {contest,user}=useContext(Context);
 
@@ -44,7 +44,7 @@ console.log(isJudge)
                 <p>Hosted by CodeQuest</p>
                 <h5>STARTS ON</h5>
                 <h6>{StartTime.toLocaleString()}  IST (Asia/Kolkata)</h6>
-              
+            
                 {isAdmin ? (
   <Link to={`/create`}>
     <button className="register-button">Created</button>
@@ -56,6 +56,10 @@ console.log(isJudge)
 ): isJudge ? (
   <Link to={`/solutions/${id}`}>
     <button className="register-button">Show Solutions</button>
+  </Link>
+): isLeaderboard ? (
+  <Link to={`/lead/${id}`}>
+    <button className="register-button">Show Leaderboard</button>
   </Link>
 ) : (
   <Link to={`/event/${id}`}>
