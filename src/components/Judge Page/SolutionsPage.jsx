@@ -20,7 +20,7 @@ const SolutionsPage = () => {
       console.error('Error fetching submissions:', error);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id,scores]);
 
   const handleScoreChange = (e, submissionId) => {
     setScores({
@@ -70,7 +70,7 @@ const SolutionsPage = () => {
                   required
                   onChange={(e) => handleScoreChange(e, submission._id)}
                 />
-                <button type="submit">Submit Score</button>
+                {!submission.score?<button  type="submit">Submit Score</button>:<button disabled id='disabled' type="submit">Submit Score</button>}
               </form>
             </div>
           </div>

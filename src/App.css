@@ -1,10 +1,11 @@
-body{
-    background-color: #FBE309;
-    /* background-color: orange; */
-    overflow-x: hidden;
+:root {
+    --theme-color: #FBE309; /* Default theme color */
+    --text-color: #0F3DDE; /* Text color for specific elements */
+  }
  
-  
-}
+  body {
+    background-color: var(--theme-color); /* Apply theme color to body background */
+  }
 *{
     scroll-behavior: smooth;
 }

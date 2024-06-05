@@ -22,6 +22,7 @@ function App() {
   const [isLoader, setisLoader] = useState(false);
   const [user, setUser] = useState({});
   const [contest, setcontest] = useState([]);
+  const [themeColor, setThemeColor] = useState('#FBE309');
 
   // const [isRegistered,setisRegistered]=useState(false)
 
@@ -54,6 +55,7 @@ function App() {
         setUser,
         contest,
         setcontest,
+        themeColor, setThemeColor
 
       }}
     >
