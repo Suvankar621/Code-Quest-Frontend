@@ -15,7 +15,7 @@ const LeaderboardPage = () => {
   useEffect(() => {
     const fetchContests = async () => {
       try {
-        const { data } = await axios.get('https://code-quest-backend.onrender.com/api/v1/contest/getcontests', {
+        const { data } = await axios.get('https://code-quest-backend.onrender.com/api/v1/contest/mycontests', {
           withCredentials: true
         });
         setContests(data.contests);
