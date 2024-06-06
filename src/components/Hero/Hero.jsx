@@ -5,16 +5,16 @@ import { Link } from 'react-router-dom';
 import { Context } from '../../Context';
 
 const Hero = () => {
-  const{themeColor, setThemeColor}=useContext(Context)
-  const handleThemeChange = (event) => {
-    const color = event.target.value;
-    setThemeColor(color);
-    document.documentElement.style.setProperty('--theme-color', color);
-  };
+  // const{themeColor, setThemeColor}=useContext(Context)
+  // const handleThemeChange = (event) => {
+  //   const color = event.target.value;
+  //   setThemeColor(color);
+  //   document.documentElement.style.setProperty('--theme-color', color);
+  // };
  
-  useEffect(() => {
-    document.documentElement.style.setProperty('--theme-color', themeColor);
-  }, [themeColor]);
+  // useEffect(() => {
+  //   document.documentElement.style.setProperty('--theme-color', themeColor);
+  // }, [themeColor]);
   return (
     <div className='container'>
     <div className="Hero">
@@ -22,7 +22,7 @@ const Hero = () => {
             <h1 className='type_text'><span className="el">Elevate your skills,</span> <span className="eyk">expand your knowledge,</span> <span className="rest">and push the boundaries of what's possible</span></h1>
             <p>Welcome to <span className="cq">CodeQuest</span>, where innovation meets collaboration! Join us for an electrifying event packed with creativity, coding, and competition.</p>
             <Link to={"/register"}><button className='btn' >Register</button></Link>
-            <div className="theme-selector">
+            {/* <div className="theme-selector">
             <h3>Colour Picker:</h3>
             <select onChange={handleThemeChange}>
               <option value="#FBE309">Default Yellow</option>
@@ -36,7 +36,7 @@ const Hero = () => {
               <option value="#8A2BE2">Blue Violet</option>
               <option value="#5F9EA0">Cadet Blue</option>
             </select>
-          </div>
+          </div> */}
       </div>
      
       <img src="Images/LH.png" alt=""/>
