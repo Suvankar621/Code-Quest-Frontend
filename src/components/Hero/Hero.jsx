@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import "./Hero.css"
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
-import { Context } from '../../Context';
+
 
 const Hero = () => {
   // const{themeColor, setThemeColor}=useContext(Context)
