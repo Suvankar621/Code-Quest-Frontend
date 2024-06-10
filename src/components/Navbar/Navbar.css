@@ -28,6 +28,28 @@
 
     
 }
+.leaderboardbtn{
+    margin: 1vmax;
+    width: 8vmax;
+    height: 2.3vmax;
+    background-color: transparent;
+    font-size: 15px;
+    font-weight: bold;
+    border: 1px solid black;
+    font-size: 12px;
+    box-shadow: 2px 2px 5px black;
+    cursor: pointer;
+
+}
+.leaderboardbtn:hover{
+    background-color: #0F3DDE;
+    color: white;
+    border: none;
+
+}
+.leaderboardbtn:active{
+    scale: 0.9;
+}
 .login_btn:hover{
 background-color: #0F3DDE;
 color: white;
@@ -57,3 +79,16 @@ border: none;
 .signup_btn:active{
         scale: 0.9;
     }
+.navbtns{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 40vmax;
+}
+.navbtns input{
+    width: 7vmax;
+    background: none;
+    border: none;
+    cursor: pointer;
+    
+}

@@ -1,35 +1,54 @@
-.event-card {
+/* Base styles for the hackathon card */
+.event-card, .event-cardBlur {
     display: inline-block;
     width: 300px;
     height: 497px;
     border: 1px solid #ddd;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
     background-color: white;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
- 
-.event-card img {
+
+/* Styles specific to the non-blurred event card */
+.event-card {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* Styles specific to the blurred event card */
+.event-cardBlur {
+    filter: blur(3px);
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Styles for the event image */
+.event-card img, .event-cardBlur img {
     width: 100%;
+    height: auto;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
 }
- 
+
+/* Styles for the event details section */
 .event-details {
     padding: 20px;
 }
 
- 
 .event-details h3 {
     font-size: 24px;
     margin-bottom: 10px;
 }
- 
+
 .event-details p {
     font-size: 16px;
     margin-bottom: 10px;
 }
 
+/* Styles for the register button */
 .register-button {
     padding: 10px 20px;
     font-size: 16px;
@@ -39,7 +58,7 @@
     cursor: pointer;
     transition: background-color 0.3s;
 }
- 
+
 .register-button:hover {
     background-color: #218838;
 }

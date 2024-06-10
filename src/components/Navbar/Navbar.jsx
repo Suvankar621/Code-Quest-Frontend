@@ -38,7 +38,23 @@ if(isLoader){
   return (
     <div className="navbar">
       <h1>CodeQuest</h1>
+      <div className="navbtns">
+         <Link to={"/"}>
+            <input type="button" value="Home" className="Home" />
+            </Link>
+            <Link to={"/"}>
+            <input type="button" value="About Us" className="About" />
+            </Link>
+            <Link to={"/"}>
+            <input type="button" value="Contact Us" className="contact" />
+            </Link>
+      </div>
+    
       <div className="auth-buttons">
+     {isAuthenticated? <Link to={"/leaderboard"}>
+            <input type="button" value="LeaderBoard" className="leaderboardbtn" />
+      </Link>:<></>}
+  
         {isAuthenticated?  <div>
           <Link to={"/"}>
             <input type="button" value="Logout" className="login_btn" onClick={onLogoutHandle} />

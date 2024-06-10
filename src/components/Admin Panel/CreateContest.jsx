@@ -14,7 +14,7 @@ const CreateContest = () => {
     startTime: '',
     endDate: '',
     endTime: '',
-    question: ''
+    questions: [{ questionText: '' }]
   });
   const [contests, setContests] = useState([]);
   const isAdmin = true;
@@ -43,9 +43,34 @@ const CreateContest = () => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    if (name.startsWith('question')) {
+      const index = parseInt(name.split('-')[1]);
+      const updatedQuestions = [...formData.questions];
+      updatedQuestions[index].questionText = value;
+      setFormData({
+        ...formData,
+        questions: updatedQuestions
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value
+      });
+    }
+  };
+
+  const handleAddQuestion = () => {
     setFormData({
       ...formData,
-      [name]: value
+      questions: [...formData.questions, { questionText: '' }]
+    });
+  };
+
+  const handleRemoveQuestion = (index) => {
+    const updatedQuestions = formData.questions.filter((_, i) => i !== index);
+    setFormData({
+      ...formData,
+      questions: updatedQuestions
     });
   };
 
@@ -56,7 +81,7 @@ const CreateContest = () => {
 
     const contestData = {
       title: formData.title,
-      question: formData.question,
+      questions: formData.questions.map(q => q.questionText),
       startTime: startTime.toISOString(),
       endTime: endTime.toISOString()
     };
@@ -76,9 +101,7 @@ const CreateContest = () => {
       console.error('There was an error creating the contest!', error);
     }
   };
-
-  console.log(contests)
-
+console.log(contests)
   return (
     <>
       <Dashboard />
@@ -107,10 +130,29 @@ const CreateContest = () => {
               <label className="form-label" htmlFor="endTime">End Time:</label>
               <input type="time" id="endTime" name="endTime" className="form-input" value={formData.endTime} onChange={handleInputChange} required />
             </div>
-            <div className="form-group">
-              <label className="form-label" htmlFor="question">Question:</label>
-              <textarea id="question" name="question" className="form-textarea" value={formData.question} onChange={handleInputChange} required></textarea>
-            </div>
+            {formData.questions.map((question, index) => (
+              <div key={index} className="form-group">
+                <label className="form-label" htmlFor={`question-${index}`}>Question {index + 1}:</label>
+                <textarea
+                  id={`question-${index}`}
+                  name={`question-${index}`}
+                  className="form-textarea"
+                  value={question.questionText}
+                  onChange={handleInputChange}
+                  required
+                ></textarea>
+                {formData.questions.length > 1 && (
+                  <button
+                    type="button"
+                    className="remove-button"
+                    onClick={() => handleRemoveQuestion(index)}
+                  >
+                    Remove Question
+                  </button>
+                )}
+              </div>
+            ))}
+            <button type="button" className="add-button" onClick={handleAddQuestion}>Add Question</button>
             <div className="form-buttons">
               <button type="submit" className="submit-button">Submit</button>
               <button type="button" className="cancel-button" onClick={closeModal}>Cancel</button>

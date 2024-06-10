@@ -45,7 +45,7 @@ const Main = () => {
         <h3>CHALLENGES</h3>
         <div className="card_items">
           {contests.map((e)=>(
-            <HackethonCard id={e._id} title={e.title} startTime={e.startTime.toLocaleString()} />
+            <HackethonCard id={e._id} title={e.title} endTime={e.endTime} startTime={e.startTime.toLocaleString()} />
             
         
           ))}
