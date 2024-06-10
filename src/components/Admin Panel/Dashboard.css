@@ -1,19 +1,29 @@
-.nav-buttons{
+.nav-buttons {
     display: flex;
-    padding: 1vmax;
+    padding: 2vmax;
     align-items: flex-start;
     flex-direction: column;
-    width:15%;
+    width: 15%;
     height: 100vh;
-    padding: 3vmax;
-    background-color: black;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    border-radius: 10px;
 }
-.nav-buttons a{
+ 
+.nav-buttons a {
     text-align: left;
     color: white;
     text-decoration: none;
-    margin-top: 1vmax;
-    font-size: 20px;
+    margin: 1.5vmax 0;
+    font-size: 18px;
     padding: 1vmax;
+    border-radius: 5px;
+    transition: background 0.3s, transform 0.3s;
 }
-
+ 
+.nav-buttons a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}

@@ -17,8 +17,8 @@ if(!isAuthenticated){
     <div className="Apps">
         <ToastContainer/>
       <div className="nav-buttons">
-      <Link to={"/dashboard"}  >Dashboard</Link>
-        <Link to={"/create"} >Create</Link>
+     
+        <Link to={"/create"} >Create Contest</Link>
       
         <Link to={"/leaderboard"} >Leaderboard</Link>
       </div>

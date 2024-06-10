@@ -110,7 +110,7 @@ const Submission = ({ question }) => {
             </form>
           </div>
         </section>
-      ) : <div>Your submission has already been received.</div>}
+      ) : <div className='rsub'>Your submission has already been received.</div>}
     </>
   );
 };

@@ -58,8 +58,12 @@
  
 .cta-buttonss {
     text-align:center;
+
  
    
+}
+.cta-buttons:active{
+    scale: 0.9;
 }
  
 .cta-buttons {

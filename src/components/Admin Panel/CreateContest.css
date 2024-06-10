@@ -4,16 +4,21 @@
     margin-top: -55vmax;
 }
 .create-button {
-  margin-top: 2vmax;
+  margin-top: 3vmax;
     margin-left: 88vmax;
     padding: 10px 20px;
     font-size: 16px;
-    /* margin: 20px; */
+    font-weight: bold;
+    background-color: rgb(69,69,236);
+    color: white;
+    border-radius: 5px;
     cursor: pointer;
     border: none;
 
   }
-  
+  .create-button:active{
+    scale: 0.9;
+  }
   .modal {
  
     background: white;

@@ -22,7 +22,7 @@ const SolutionPage = () => {
       console.error('Error fetching submissions:', error);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id,scores]);
+  }, [id,scores,userSubmissions]);
 
   const groupSubmissionsByUser = (submissions) => {
     const groupedSubmissions = {};

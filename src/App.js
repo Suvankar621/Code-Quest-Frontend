@@ -43,7 +43,7 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
-  console.log(user.role === "Judge");
+ 
   return (
     <Context.Provider
       value={{

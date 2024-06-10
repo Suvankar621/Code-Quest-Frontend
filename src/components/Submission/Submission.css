@@ -233,4 +233,7 @@ textarea {
   .submit-btn:hover {
     background-color: #0056b3; /* Darker blue on hover */
   }
-  
+  .rsub{
+    font-size: 20px;
+    
+  }
