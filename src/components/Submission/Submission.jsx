@@ -5,20 +5,11 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Context } from '../../Context';
 
-const Submission = ({ question, endTime }) => {
-  const { user } = useContext(Context);
+const Submission = ({ question }) => {
+  const { user } = useContext(Context); // Ensure user context is available
   const { id } = useParams();
   const [answers, setAnswers] = useState({});
-  const [isAnswered, setIsAnswered] = useState(false);
-  const [isEditable, setIsEditable] = useState(false);
-  const [submissionIds, setSubmissionIds] = useState({});
-
-  useEffect(() => {
-    const now = new Date();
-    if (now > new Date(endTime)) {
-      setIsEditable(false); // Disable editing after end time
-    }
-  }, [endTime]);
+  const [isAnswered, setIsAnswered] = useState(null); // null indicates loading state
 
   const handleAnswerChange = (questionId, value) => {
     setAnswers({ ...answers, [questionId]: value });
@@ -29,26 +20,19 @@ const Submission = ({ question, endTime }) => {
 
     try {
       for (const [questionId, answer] of Object.entries(answers)) {
-        const url = submissionIds[questionId]
-          ? `https://code-quest-backend.onrender.com/api/v1/contest/update/${submissionIds[questionId]}`
-          : `https://code-quest-backend.onrender.com/api/v1/contest/submit/${id}`;
-
-        const method = submissionIds[questionId] ? 'put' : 'post';
-
-        const { data } = await axios({
-          method,
-          url,
-          data: { questionId, answer },
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        });
-
+        const { data } = await axios.post(
+          `https://code-quest-backend.onrender.com/api/v1/contest/submit/${id}`,
+          { questionId, answer },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
+        );
         toast.success(data.message);
-        setIsAnswered(true);
-        setIsEditable(false);
       }
+      setIsAnswered(true);
     } catch (err) {
       toast.error(err.response?.data?.message || "Submission failed. Please try again.");
     }
@@ -78,15 +62,10 @@ const Submission = ({ question, endTime }) => {
 
           if (userSubmissions.length > 0) {
             const answerMap = {};
-            const submissionIdMap = {};
-
             userSubmissions.forEach(submission => {
               answerMap[submission.questionId] = submission.answer;
-              submissionIdMap[submission.questionId] = submission._id;
             });
-
             setAnswers(answerMap);
-            setSubmissionIds(submissionIdMap);
             setIsAnswered(true);
           } else {
             setIsAnswered(false);
@@ -101,48 +80,38 @@ const Submission = ({ question, endTime }) => {
     };
 
     fetchContestData();
-  }, [id, user, isEditable]);
-  console.log(question)
+  }, [id, user]);
 
   return (
-    <div className="submission-container">
-      <h2>Submit Your Work</h2>
-      <form id="submissionForm" onSubmit={handleSubmit} encType="multipart/form-data">
-        {question.map((question) => (
-          <div key={question._id} className="form-group">
-            <h3>Q) {question.questionText}</h3>
-            <label className="label1" htmlFor={`submissionMessage-${question._id}`}>Write Your Answer Here:</label>
-            <textarea
-              id={`submissionMessage-${question._id}`}
-              name={`submissionMessage-${question._id}`}
-              rows="5"
-              value={answers[question._id] || ''}
-              onChange={(e) => handleAnswerChange(question._id, e.target.value)}
-              required
-              disabled={!isEditable && isAnswered} // Disable textarea when not editable and already answered
-            ></textarea>
+    <>
+      {isAnswered === null ? (
+        <div>Loading...</div>
+      ) : !isAnswered ? (
+        <section className="participant-panel">
+          <div className="containers1">
+            <h2>Submit Your Work</h2>
+            <form id="submissionForm" onSubmit={handleSubmit} encType="multipart/form-data">
+              {question.map((q) => (
+                <div key={q._id} className="form-group">
+                  <h3>Q) {q.questionText}</h3>
+                  <label className="label1" htmlFor={`submissionMessage-${q._id}`}>Your Answer:</label>
+                  <textarea
+                    id={`submissionMessage-${q._id}`}
+                    name={`submissionMessage-${q._id}`}
+                    rows="5"
+                    value={answers[q._id] || ''}
+                    onChange={(e) => handleAnswerChange(q._id, e.target.value)}
+                  ></textarea>
+                </div>
+              ))}
+              <div className="form-group">
+                <button type="submit" className="submit-btn">Submit</button>
+              </div>
+            </form>
           </div>
-        ))}
-        <div className="form-group">
-          {isAnswered ? (
-            <button
-              type="button"
-              className="edit-btn"
-              onClick={() => setIsEditable(!isEditable)} // Toggle isEditable on button click
-            >
-              {isEditable ? 'Cancel Edit' : 'Edit'}
-            </button>
-          ) : null}
-          <button
-            type="submit"
-            className="submit-btn"
-            disabled={!isEditable && isAnswered} // Disable submit button when not editable or if already answered
-          >
-            {isAnswered ? 'Save' : 'Submit'}
-          </button>
-        </div>
-      </form>
-    </div>
+        </section>
+      ) : <div>Your submission has already been received.</div>}
+    </>
   );
 };
 

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import "./EventPage.css"
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import axios from 'axios';
 import { Context } from '../../Context';
 import { toast } from 'react-toastify';
@@ -10,7 +10,7 @@ const EventPage = () => {
   const now = new Date();
   const [isRegistered, setisRegistered] = useState(false);
   const { contest, setcontest } = useContext(Context);
-  const { user } = useContext(Context);
+  const { user,isAuthenticated } = useContext(Context);
   const startTime = new Date(contest.startTime);
   const endTime = new Date(contest.endTime);
 
@@ -55,7 +55,9 @@ const EventPage = () => {
       }
     }
   }, [contest, user._id]);
-console.log(contest.questions)
+if(!isAuthenticated){
+  return <Navigate to={"/"}/>
+}
   return (
     <>
       <div className='img'>  
