@@ -7,7 +7,7 @@ import { Context } from '../../Context';
 
 const Dashboard = () => {
 
-const {isAuthenticated}=useContext(Context)
+const {isAuthenticated,user}=useContext(Context)
 if(!isAuthenticated){
   return <Navigate to={"/"} />
 }
@@ -17,8 +17,10 @@ if(!isAuthenticated){
     <div className="Apps">
         <ToastContainer/>
       <div className="nav-buttons">
+        {user.role!=="Participants"?<Link to={"/create"} >Create Contest</Link>:<></>}
+        {user.role!=="Judge"?<Link to={"/create"} >Create Contest</Link>:<></>}
      
-        <Link to={"/create"} >Create Contest</Link>
+        
       
         <Link to={"/leaderboard"} >Leaderboard</Link>
       </div>
