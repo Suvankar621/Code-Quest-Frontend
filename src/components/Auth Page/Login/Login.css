@@ -13,6 +13,7 @@
     width: 50%;
     height: 100%;
     background-color: white;
+   
     position: absolute;
     top: 0;
     left: 0;
@@ -55,12 +56,16 @@ input{
 label{
     font-weight: bold;
     margin-top: 100px;
+    color: rgb(92, 91, 91);
 }
-
+#rm{
+    color: rgb(92, 91, 91);
+}
 .text{
    margin-left: -11vmax;
    margin-top: -3vmax;
 }
+
 .btnn{
     width: 404px;
     height: 35.4px;
@@ -88,7 +93,12 @@ label{
     
 }
 
-
+.text h1{
+    color: rgb(64, 63, 63);
+}
+.text p{
+    color: rgb(92, 91, 91);
+}
 @keyframes animation {
     0% {
         transform: translateY(-10px);

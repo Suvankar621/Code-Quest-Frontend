@@ -67,7 +67,7 @@ if(isLoader){
 
             
                 <input type="checkbox" id='checkbox'  /> 
-                <span >Remember me</span><br />
+                <span id='rm' >Remember me</span><br />
                 
                 <button type='submit' className='btnn'>Login</button>
             </form>

@@ -4,9 +4,10 @@ import './Submission.css';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { Context } from '../../Context';
+import Loading from '../Loader/Loading';
 
 const Submission = ({ question }) => {
-  const { user } = useContext(Context); // Ensure user context is available
+  const { user,   isLoader,setisLoader, } = useContext(Context); // Ensure user context is available
   const { id } = useParams();
   const [answers, setAnswers] = useState({});
   const [isAnswered, setIsAnswered] = useState(null); // null indicates loading state
@@ -19,6 +20,7 @@ const Submission = ({ question }) => {
     event.preventDefault();
 
     try {
+      setisLoader(true);
       for (const [questionId, answer] of Object.entries(answers)) {
         const { data } = await axios.post(
           `https://code-quest-backend.onrender.com/api/v1/contest/submit/${id}`,
@@ -33,6 +35,7 @@ const Submission = ({ question }) => {
         toast.success(data.message);
       }
       setIsAnswered(true);
+      setisLoader(false)
     } catch (err) {
       toast.error(err.response?.data?.message || "Submission failed. Please try again.");
     }
@@ -81,7 +84,9 @@ const Submission = ({ question }) => {
 
     fetchContestData();
   }, [id, user]);
-
+  if(isLoader){
+    return <Loading/>
+  }
   return (
     <>
       {isAnswered === null ? (
