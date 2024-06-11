@@ -28,7 +28,6 @@ const Login = () => {
         setisLoader(false);
         toast.success(data.message);
         setisAuthenticated(true);
-        
     } catch (error) {
         setisLoader(false);
         toast.error(error.response?.data?.message || "An error occurred");
