@@ -19,10 +19,6 @@ if(!isAuthenticated){
       <div className="nav-buttons">
     
         {user.role!=="Participants"?<Link to={"/create"} >Create Contest</Link>:<></>}
-       
-     
-        
-      
         <Link to={"/leaderboard"} >Leaderboard</Link>
       </div>
       <div className="component-container">
