@@ -17,8 +17,9 @@ if(!isAuthenticated){
     <div className="Apps">
         <ToastContainer/>
       <div className="nav-buttons">
+    
         {user.role!=="Participants"?<Link to={"/create"} >Create Contest</Link>:<></>}
-        {user.role!=="Judge"?<Link to={"/create"} >Create Contest</Link>:<></>}
+       
      
         
       
