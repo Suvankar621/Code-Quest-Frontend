@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import axios from 'axios';
 
-const genAi = new GoogleGenerativeAI('AIzaSyCDlCpViCC3QgPCThe0A2YmAXd4Mo8VgtM');
+const genAi = new GoogleGenerativeAI('');
 
 const Chatbot = () => {
   const [input, setInput] = useState('');
