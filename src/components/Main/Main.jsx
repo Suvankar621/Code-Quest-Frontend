@@ -25,7 +25,6 @@ const Main = () => {
     
   }, [])
 
-  console.log(contests)
   return (
     <>
     <section class="hero">

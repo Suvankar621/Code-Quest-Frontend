@@ -2,7 +2,7 @@
     width: 100vw;
     height: 110vh;
     background-color: blue;
-    background-image: url("../../../public/Images/event_img.png");
+    background-image: url("../../../public/Images/event_img.gif");
     background-repeat: no-repeat;
     background-size: cover;
 }

@@ -31,11 +31,11 @@ const HackethonCard = ({ id, title, startTime, endTime, isAdmin, isJudge, isLead
 
   const nowDate = new Date(now);
   const isBlurred = nowDate < start || nowDate > end;
-  console.log(nowDate,start,end);
+
 
   return (
     <div className={`${isBlurred ? 'event-cardBlur' : 'event-card'}`}>
-      <img src="Images/event_img.png" alt="The Hacker" />
+      <img src="Images/event_img.gif" alt="The Hacker" />
       
       <div className="event-details">
         <h4>H A C K A T H O N</h4>

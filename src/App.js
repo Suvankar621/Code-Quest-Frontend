@@ -43,7 +43,7 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated]);
 
- 
+
   return (
     <Context.Provider
       value={{
@@ -60,6 +60,7 @@ function App() {
       }}
     >
       <div className="App">
+        
         <ToastContainer />
         <BrowserRouter>
           <Navbar />
