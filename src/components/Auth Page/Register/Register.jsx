@@ -20,7 +20,7 @@ const Register = () => {
     try {
       setisLoader(true)
         const { data } = await axios.post(
-            "https://code-quest-backend.onrender.com/api/v1/users/new",
+            "https://code-quest-backend.onrender.com/api/v1/users/new", 
             { name, email, password, role },
             {
                 headers: {
