@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "./Judge.css"
 import HackethonCard from '../Card/HackethonCard'
 import axios from 'axios';
+import { server } from '../../Contants';
 const Judge = () => {
     const isJudge=true;
     const [contests, setContests] = useState([]);
@@ -9,7 +10,7 @@ const Judge = () => {
   useEffect(() => {
     const fetchContests = async () => {
       try {
-        const response = await axios.get('https://code-quest-backend.onrender.com/api/v1/contest/getcontests',{
+        const response = await axios.get(`${server}/api/v1/contest/getcontests`,{
             withCredentials: true
           });
         setContests(response.data.contests); // Assuming the contests are returned as an array in the 'contests' property

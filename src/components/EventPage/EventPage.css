@@ -2,7 +2,7 @@
     width: 100vw;
     height: 110vh;
     background-color: blue;
-    background-image: url("../../../public/Images/event_img.gif");
+    background-image: url("../../../public/Images/event_img.png");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -62,9 +62,9 @@
  
    
 }
-.cta-buttons:active{
+/* .cta-buttons:active{
     scale: 0.9;
-}
+} */
  
 .cta-buttons {
     padding: 5px 30px;
@@ -199,4 +199,66 @@ footer {
     transition: background-color 0.3s;
     margin-bottom: 10px;
     margin-top: 30px; 
+}
+.omodal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1vmax;
+    gap: 10px;
+    position: absolute;
+    border: 1px solid black;
+    width: 700px;
+    height: 300px;
+    padding: 3vmax;
+    margin-left: 5vmax;
+    background-color: lightblue;
+}
+.omodal input{
+    margin: 1vmax;
+    padding: 1vmax;
+}
+.omodal button{
+    width: 12vmax;
+    height: 3vmax;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    border-radius: 9px;
+    margin-left: 0.7vmax;
+}
+#close{
+    position: absolute;
+    background-color: transparent;
+    color: black;
+    margin-top: -21.3vmax;
+    margin-left: 31.5vmax;
+    font-size: 14px;
+    border: 1px solid black;
+    width: 2vmax;
+    height: 2vmax;
+    cursor: pointer;
+}
+.cmodal{
+    display: none;
+}
+.members{
+    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+    padding: 1vmax;
+    margin: 0.5vmax;
+    border-radius: 9px;
+}
+.mem{
+    width: 27vmax;
+    border: 1px solid black;
+    padding: 1vmax;
+    border-radius: 9px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin: 1vmax;
+}
+.mem ul li{
+    list-style: none;
 }

@@ -1,0 +1,149 @@
+.jury_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 75.5vh;
+    padding: 20px;
+    margin-top: -40vmax;
+    overflow: hidden;
+  
+
+
+
+  }
+  .add_jury_btn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+    margin-left: 20vmax;
+  }
+  
+.modal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+   margin-left: 34vmax;
+   margin-top: -5vmax;
+}
+  
+  .modal_content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 90%;
+    position: relative;
+  }
+  
+  .close {
+    position: absolute;
+    top: -1vmax;
+    right: -2vmax;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  
+  .jury_login {
+    margin-bottom: 30px;
+  }
+  
+  .jury_login .text {
+    text-align: center;
+  }
+  
+  .jury_login form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .jury_login input {
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+  }
+  .modal input{
+    width: 37vmax;
+  }
+  
+  .jury_btnn {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 9px;
+  }
+  
+  .juryMembers {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    width: 100%;
+    max-width: 1000px;
+    margin-left: 22vmax;
+    margin-top: 1vmax;
+  }
+  
+  .juryMembers h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .jury_cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  .jury_card {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .jury_card_content {
+    text-align: center;
+  }
+  
+  .jury_card h3 {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 18px;
+  }
+  
+  .jury_card p {
+    margin: 0;
+    margin-bottom: 20px;
+    color: #555;
+  }
+  
+  .delete_btn {
+    padding: 8px 16px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .delete_btn:hover {
+    background-color: #c82333;
+  }

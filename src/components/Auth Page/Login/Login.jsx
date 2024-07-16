@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { Navigate } from 'react-router-dom';
 import axios from 'axios';
 import Loading from '../../Loader/Loading';
+import { server } from '../../../Contants';
 
 const Login = () => {
   const {isAuthenticated,setisAuthenticated,isLoader,setisLoader}=useContext(Context)
@@ -16,7 +17,7 @@ const Login = () => {
     try {
         setisLoader(true)
         const { data } = await axios.post(
-            "https://code-quest-backend.onrender.com/api/v1/users/login",
+            `${server}/api/v1/users/login`,
             {  email, password },
             {
                 headers: {

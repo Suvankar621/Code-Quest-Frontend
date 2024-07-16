@@ -16,6 +16,9 @@ import CreateContest from "./components/Admin Panel/CreateContest";
 import SolutionsPage from "./components/Judge Page/SolutionsPage";
 import LeaderboardPage from "./components/Admin Panel/LeaderboardPage";
 import LeaderBoard from "./components/LeaderBoard/LeaderBoard";
+import { server } from "./Contants";
+import Addjury from "./components/Admin Panel/Addjury";
+// import Chatbot from "./Chatbot/Chatbot";
 
 function App() {
   const [isAuthenticated, setisAuthenticated] = useState(false);
@@ -23,12 +26,11 @@ function App() {
   const [user, setUser] = useState({});
   const [contest, setcontest] = useState([]);
   // const [themeColor, setThemeColor] = useState('#FBE309');
-
   // const [isRegistered,setisRegistered]=useState(false)
 
   useEffect(() => {
     axios
-      .get("https://code-quest-backend.onrender.com/api/v1/users/me", {
+      .get(`${server}/api/v1/users/me`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -60,7 +62,7 @@ function App() {
       }}
     >
       <div className="App">
-        
+        {/* <Chatbot/> */}
         <ToastContainer />
         <BrowserRouter>
           <Navbar />
@@ -83,6 +85,11 @@ function App() {
             <Route path="/event/:id" element={<EventPage />} />
             {isAuthenticated ? (
               <Route path="/create" element={<CreateContest />} />
+            ) : (
+              <Route path="/" element={<Hero />} />
+            )}
+             {isAuthenticated ? (
+              <Route path="/addjury" element={<Addjury />} />
             ) : (
               <Route path="/" element={<Hero />} />
             )}

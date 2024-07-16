@@ -56,6 +56,7 @@ padding: 2vmax;
 .score-form {
     display: flex;
     align-items: center;
+   
 
 }
 #disabled {
@@ -92,4 +93,8 @@ padding: 2vmax;
  
 .score-form button:hover {
     background-color: #357ABD;
+}
+.submission{
+    border: 1px solid black;
+    padding: 1vmax;
 }

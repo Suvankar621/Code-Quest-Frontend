@@ -5,6 +5,7 @@ import "./CreateContest.css"
 import Dashboard from './Dashboard';
 import HackethonCard from '../Card/HackethonCard';
 import { toast } from 'react-toastify';
+import { server } from '../../Contants';
 
 const CreateContest = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -22,7 +23,7 @@ const CreateContest = () => {
   useEffect(() => {
     const fetchContests = async () => {
       try {
-        const { data } = await axios.get('https://code-quest-backend.onrender.com/api/v1/contest/mycontests', {
+        const { data } = await axios.get(`${server}/api/v1/contest/mycontests`, {
           withCredentials: true
         });
         setContests(data.contests);
@@ -87,7 +88,7 @@ const CreateContest = () => {
     };
 
     try {
-      const { data } = await axios.post('https://code-quest-backend.onrender.com/api/v1/contest/create', contestData, {
+      const { data } = await axios.post(`${server}/api/v1/contest/create`, contestData, {
         headers: {
           "Content-Type": "application/json"
         },

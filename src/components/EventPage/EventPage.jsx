@@ -1,40 +1,31 @@
-import React, { useContext, useEffect, useState } from 'react'
-import "./EventPage.css"
-import { Navigate, useParams } from 'react-router-dom'
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import "./EventPage.css";
+import { Navigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Context } from '../../Context';
 import { toast } from 'react-toastify';
 import Submission from '../Submission/Submission';
+import { server } from '../../Contants';
+import Loading from '../Loader/Loading';
 
 const EventPage = () => {
   const now = new Date();
   const [isRegistered, setisRegistered] = useState(false);
+  const [teamName, setTeamName] = useState("");
+  const [memberEmail, setMemberEmail] = useState({});
+  const [members, setMembers] = useState([]);
+  const [isTeamRegistered, setIsTeamRegistered] = useState(false);
   const { contest, setcontest } = useContext(Context);
-  const { user,isAuthenticated } = useContext(Context);
-  const startTime = new Date(contest.startTime);
-  const endTime = new Date(contest.endTime);
-
+  const { user, isAuthenticated } = useContext(Context);
+  const { isLoader,setisLoader } = useContext(Context);
+  const [isTeamSubmitted,setisTeamSubmitted]=useState(false)
   const { id } = useParams();
 
-  const registerContest = () => {
-    axios.get(
-      `https://code-quest-backend.onrender.com/api/v1/contest/register/${id}`,
-      {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json"
-        },
-      }
-    ).then((res) => {
-      setisRegistered(true)
-      toast.success(res.data.message)
-    }).catch((e) => {
-      toast.error(e.response.data.message)
-    });
-  };
 
+  const modalref=useRef();
+  
   useEffect(() => {
-    axios.get(`https://code-quest-backend.onrender.com/api/v1/contest/getcontest/${id}`, {
+    axios.get(`${server}/api/v1/contest/getcontest/${id}`, {
       withCredentials: true,
       headers: {
         "Content-Type": "application/json"
@@ -42,22 +33,117 @@ const EventPage = () => {
     }).then((res) => {
       setcontest(res.data.contest);
     }).catch(() => {
-      setcontest(null)
-    })
-  }, [id, contest,setcontest]);
+      setcontest(null);
+    });
+  }, [id, setcontest]);
 
   useEffect(() => {
-    if (contest && contest.registeredUsers) {
-      if (contest.registeredUsers.includes(user._id)) {
-        setisRegistered(true);
-      } else {
-        setisRegistered(false);
-      }
+    if (contest && contest.registeredTeams) {
+      // Check if the user is registered in any team as a member
+      const userIsRegistered = contest.registeredTeams.some(team => 
+        team.members.some(member => member.email === user.email)
+        
+      );
+
+      contest.registeredTeams.forEach(team => {
+        team.members.forEach(member => {
+          if(member.email===user.email){
+            console.log(member.email);
+            setisTeamSubmitted(true)
+            return;
+          }
+        
+     
+        });
+      });
+      console.log(userIsRegistered)
+      setisRegistered(userIsRegistered);
+      // setMembers(team.members)
+// TODO-----------------------------
+contest.registeredTeams.some(team => {
+  if (team.teamLeader.toString() === user._id.toString()) {
+      setMembers(team.members);
+      return true; // Exit the loop once we find the team leader
+  }
+  return false; // Continue to the next team if not found
+});
+      
+      // Check if the user is part of any team
+      const userIsInTeam = contest.registeredTeams.some(team => 
+        team.teamLeader.toString() === user._id || team.members.some(member => member.email === user.email)
+      );
+      setisRegistered(userIsInTeam)
+      setIsTeamRegistered(userIsInTeam);
     }
-  }, [contest, user._id]);
-if(!isAuthenticated){
-  return <Navigate to={"/"}/>
+  }, [contest, user]);
+
+
+  const handleModalOpen = () => {
+    modalref.current.classList.add("omodal")
+    modalref.current.classList.remove("cmodal")
+  };
+
+  const handleModalClose = (e) => {
+    e.preventDefault()
+    modalref.current.classList.remove("omodal")
+    modalref.current.classList.add("cmodal")
+  };
+
+
+
+  const handleMemberEmailChange = (e) => {
+    setMemberEmail(e.target.value);
+  };
+
+  const handleAddMember = (e) => {
+      e.preventDefault()
+      setMembers([...members,{email:memberEmail}]);
+      setMemberEmail(''); // Clear input field after adding member
+ 
+  };
+  console.log(members)
+  // console.log(memberEmail)
+  console.log(contest)
+  // console.log(isRegistered)
+
+  const registerTeam = (e) => {
+    e.preventDefault()
+    modalref.current.classList.remove("omodal")
+    modalref.current.classList.add("cmodal")
+    setisLoader(true)
+    axios.post(
+      `${server}/api/v1/contest/register/team/${id}`,
+      { teamName, members },
+      {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "application/json"
+        },
+      }
+    ).then((res) => {
+      setIsTeamRegistered(true);
+      setisRegistered(true)
+      setisLoader(false)
+      toast.success(res.data.message);
+    }).catch((e) => {
+      setisRegistered(false)
+      toast.error(e.response.data.message);
+    });
+  };
+if(isLoader){
+  return <Loading/>
 }
+  if (!isAuthenticated) {
+    return <Navigate to="/" />;
+  }
+
+  if (!contest) {
+    return <div>Loading...</div>;
+  }
+
+  const startTime = new Date(contest.startTime);
+  const endTime = new Date(contest.endTime);
+console.log(isTeamSubmitted)
   return (
     <>
       <div className='img'>  
@@ -75,12 +161,45 @@ if(!isAuthenticated){
           <div className="cta-buttonss">
             {isRegistered 
               ? <button className="cta-buttons_applied disabled" disabled ><b>Applied</b></button>
-              : <button className="cta-buttons" onClick={registerContest}><b>Participate Now</b></button>
+              : <button className="cta-buttons" onClick={handleModalOpen}><b>Participate Now</b></button>
             }
+          </div>
+         
+           <div className="mem">
+           <h3>Registered Members</h3>
+           <ol start="1">
+           {members.map((item)=>(
+                <li>{item.email}</li>
+           ))}
+           </ol>
+             {/* {members.map((item,i)=>(
+               <ol start="1">
+                 <li>{item.email}</li>
+               </ol>
+             ))} */}
+           </div>
+         
+          <div ref={modalref} className='cmodal' >
+            <form >
+          <h1>Add Team Members</h1>
+            <input type="text" onChange={(e)=>setTeamName(e.target.value)} placeholder='Enter Your Team Name' />
+            <input type="text" onChange={handleMemberEmailChange} placeholder='Member Email' />
+            <button onClick={handleAddMember}>Add Members</button>
+            <button onClick={registerTeam} >Register</button>
+            <button id='close' onClick={handleModalClose}>X</button>
+            </form>
+      
+            <div className="members">
+              {members.map((item)=>(
+                <ol type>
+                  <li>{item.email}</li>
+                </ol>
+              ))}
+            </div>
           </div>
         </div>
       </section>
-      {(now >= startTime && now <= endTime) && isRegistered && (
+      {(now >= startTime && now <= endTime) && (isRegistered || isTeamRegistered) && (
         <Submission question={contest.questions} endTime={endTime} />
       )}
       <section className="challenge-details">
@@ -91,60 +210,12 @@ if(!isAuthenticated){
             <li>Open to individuals or teams of 1-4 members.</li>
             <li>Participants must adhere to the code of conduct throughout the event.</li>
           </ul>
-          <p><strong>2. Registration:</strong></p>
-          <ul>
-            <li>All participants must register online before the deadline.</li>
-            <li>Late registrations will not be accepted, so ensure you register on time.</li>
-          </ul>
-          <p><strong>3. Original Work:</strong></p>
-          <ul>
-            <li>All answers must be original and developed during the hackathon.</li>
-            <li>Plagiarism or use of pre-existing answers will result in disqualification.</li>
-          </ul>
-          <p><strong>4. Code of Conduct:</strong></p>
-          <ul>
-            <li>Respect all participants, organizers, judges, and sponsors.</li>
-            <li>Harassment, discrimination, or any form of misconduct will not be tolerated.</li>
-            <li>Maintain a supportive and inclusive environment for all participants.</li>
-          </ul>
-          <p><strong>5. Submission Requirements:</strong></p>
-          <ul>
-            <li>Each team must submit their task by the specified deadline.</li>
-            <li>Submissions should include a demo, presentation, and any required documentation.</li>
-          </ul>
-          <p><strong>6. Judging Criteria:</strong></p>
-          <ul>
-            <li>Projects will be evaluated based on creativity, technical complexity, innovation, and relevance to the theme.</li>
-            <li>Judges' decisions are final and binding.</li>
-          </ul>
-          <p><strong>7. Teamwork:</strong></p>
-          <ul>
-            <li>Teams are encouraged to collaborate and leverage each other's strengths.</li>
-            <li>Each team member should contribute meaningfully to the project.</li>
-          </ul>
-          <p><strong>8. Prizes:</strong></p>
-          <ul>
-            <li>Prizes will be awarded to the top-performing teams based on the judging criteria.</li>
-            <li>Prizes are non-transferable and subject to applicable laws and regulations.</li>
-          </ul>
-          <p><strong>9. Disqualification:</strong></p>
-          <ul>
-            <li>Violation of any rules may result in immediate disqualification.</li>
-            <li>Organizers reserve the right to disqualify any participant or team at their discretion.</li>
-          </ul>
-          <p><strong>10. Liability:</strong></p>
-          <ul>
-            <li>Organizers are not liable for any loss, damage, or injury incurred during the hackathon.</li>
-            <li>Participants are responsible for their own belongings and well-being.</li>
-          </ul>
-          <p><strong>11. Changes to Rules:</strong></p>
-          <ul>
-            <li>Organizers reserve the right to modify or update the rules at any time, with prior notice to participants.</li>
-          </ul>
+          {/* Other sections omitted for brevity */}
         </div>
       </section>
+      
     </>
-  )
-}
+  );
+};
 
 export default EventPage;

@@ -1,93 +1,156 @@
 import React, { useEffect, useState } from 'react';
-import "./Judge.css";
+import './Judge.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { server } from '../../Contants';
 
 const SolutionPage = () => {
-  const [userSubmissions, setUserSubmissions] = useState({});
-  const [scores, setScores] = useState({});
+  const [questions, setQuestions] = useState([]);
+  const [teamScores, setTeamScores] = useState({}); // Track scores per team
   const { id } = useParams();
 
   useEffect(() => {
-    axios.get(`https://code-quest-backend.onrender.com/api/v1/contest/getcontest/${id}`, {
-      withCredentials: true,
-      headers: {
-        "Content-Type": "application/json"
-      },
-    }).then((res) => {
-      const submissions = res.data.contest.submissions;
-      const submissionsByUser = groupSubmissionsByUser(submissions);
-      setUserSubmissions(submissionsByUser);
-    }).catch((error) => {
-      console.error('Error fetching submissions:', error);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id,scores,userSubmissions]);
-
-  const groupSubmissionsByUser = (submissions) => {
-    const groupedSubmissions = {};
-    submissions.forEach(submission => {
-      if (!groupedSubmissions[submission.userId]) {
-        groupedSubmissions[submission.userId] = [];
+    const fetchContestData = async () => {
+      try {
+        const res = await axios.get(`${server}/api/v1/contest/getcontest/${id}`, {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        });
+        setQuestions(res.data.contest.questions);
+        initializeTeamScores(res.data.contest.registeredTeams);
+      } catch (error) {
+        console.error('Error fetching contest data:', error);
+        setQuestions([]);
       }
-      groupedSubmissions[submission.userId].push(submission);
+    };
+
+    fetchContestData();
+  }, [id]);
+
+  const initializeTeamScores = (teams) => {
+    const initialScores = {};
+    teams.forEach(team => {
+      initialScores[team._id] = {
+        score1: '',
+        score2: '',
+        score3: '',
+        score4: ''
+      };
     });
-    return groupedSubmissions;
+    setTeamScores(initialScores);
   };
 
-  const handleScoreChange = (e, submissionId) => {
+  const handleScoreChange = (e, teamId, scoreField) => {
     const score = e.target.value;
-    setScores({ ...scores, [submissionId]: score });
+    setTeamScores({
+      ...teamScores,
+      [teamId]: {
+        ...teamScores[teamId],
+        [scoreField]: score
+      }
+    });
   };
 
-  const handleSubmitScore = async (e, submissionId) => {
+  const handleSubmitScores = async (e, teamId, questionId) => {
     e.preventDefault();
-    const score = scores[submissionId];
+    const { score1, score2, score3, score4 } = teamScores[teamId];
+
     try {
-      const res = await axios.post(`https://code-quest-backend.onrender.com/api/v1/contest/score/${id}/${submissionId}`, {
-        score
-      }, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "application/json"
-        },
-      });
-      console.log('Score submitted successfully:', res.data);
-      alert('Score submitted successfully');
+      const res = await axios.post(
+        `${server}/api/v1/contest/score/${id}/${questionId}/${teamId}`, // Assuming questions[0]._id is the first question's ID
+        { score1, score2, score3, score4 },
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        }
+      );
+      console.log('Scores submitted successfully:', res.data);
+      alert('Scores submitted successfully');
+      // Optional: Update local state or refresh data
     } catch (error) {
-      console.error('Error submitting score:', error);
-      alert('Error submitting score');
+      console.error('Error submitting scores:', error);
+      alert('Error submitting scores');
     }
   };
 
+  if (questions.length === 0) {
+    return <div>Loading...</div>;
+  }
+  questions.forEach(e => {
+    console.log(e.submissions)
+
+  });
+  
   return (
     <>
       <h2>Answer Submissions</h2>
-      {Object.keys(userSubmissions).map(userId => (
-        <div className="containersss" key={userId}>
-          <h3>User: {userId}</h3>
-          {userSubmissions[userId].map((submission) => (
+      {questions.map((question) => (
+        <div className="containersss" key={question._id}>
+          <h3>Question: {question.questionText}</h3>
+          {question.submissions.map((submission,i) => (
+               <>
             <div className="submission" key={submission._id}>
-              <p className="submission-message">Answer: {submission.answer}</p>
-              <form className="score-form" onSubmit={(e) => handleSubmitScore(e, submission._id)}>
-                <label htmlFor={`score-${submission._id}`}>Score:</label>
+              <h2><b>{submission.userId}</b> </h2>
+              <p className="submission-message">Answer: {i} <a href={submission.file.url} target='__blanck'>{submission.file.url}</a></p>
+              <form
+                className="score-form"
+                key={`form-${submission._id}`}
+                onSubmit={(e) => handleSubmitScores(e, submission.userId, question._id)}
+              >
+                <label htmlFor={`score1-${submission.userId}`}>Score 1:</label>
                 <input
                   type="number"
-                  value={submission.score }
-                  id={`score-${submission._id}`}
-                  name={`score-${submission._id}`}
+                  value={teamScores[submission.userId]?.score1 || ''}
+                  id={`score1-${submission.userId}`}
+                  name={`score1-${submission.userId}`}
                   min="0"
                   max="100"
                   required
-                  onChange={(e) => handleScoreChange(e, submission._id)}
+                  onChange={(e) => handleScoreChange(e, submission.userId, 'score1')}
                 />
-                {!submission.score ? (
-                  <button type="submit">Submit Score</button>
-                ) : (
-                  <button disabled id='disabled' type="submit">Submit Score</button>
-                )}
+                <label htmlFor={`score2-${submission.userId}`}>Score 2:</label>
+                <input
+                  type="number"
+                  value={teamScores[submission.userId]?.score2 || ''}
+                  id={`score2-${submission.userId}`}
+                  name={`score2-${submission.userId}`}
+                  min="0"
+                  max="100"
+                  required
+                  onChange={(e) => handleScoreChange(e, submission.userId, 'score2')}
+                />
+                <label htmlFor={`score3-${submission.userId}`}>Score 3:</label>
+                <input
+                  type="number"
+                  value={teamScores[submission.userId]?.score3 || ''}
+                  id={`score3-${submission.userId}`}
+                  name={`score3-${submission.userId}`}
+                  min="0"
+                  max="100"
+                  required
+                  onChange={(e) => handleScoreChange(e, submission.userId, 'score3')}
+                />
+                <label htmlFor={`score4-${submission.userId}`}>Score 4:</label>
+                <input
+                  type="number"
+                  value={teamScores[submission.userId]?.score4 || ''}
+                  id={`score4-${submission.userId}`}
+                  name={`score4-${submission.userId}`}
+                  min="0"
+                  max="100"
+                  required
+                  onChange={(e) => handleScoreChange(e, submission.userId, 'score4')}
+                />
+                <button type="submit">Submit Scores</button>
               </form>
+             
             </div>
+             <p>-----------------------------------------------------------------------</p>
+          </>
           ))}
         </div>
       ))}

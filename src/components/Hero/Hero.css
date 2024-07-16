@@ -38,6 +38,7 @@
    
 }
 .container{
+    margin-top: 3vmax;
    overflow: hidden;
 }
 .el{
@@ -46,6 +47,10 @@
 .type_text .eyk {
     animation: glow 3s infinite; 
 }
+.ev{
+    animation: glow 3s infinite; 
+}
+
 .text button:hover{
     background-color: #001e8b;
 }

@@ -1,6 +1,7 @@
 import React, {  useEffect, useState } from 'react'
 
 import "./LeaderBoard.css"
+import { server } from '../../Contants';
 
 import axios from 'axios';
 import HackethonCard from '../Card/HackethonCard';
@@ -16,7 +17,7 @@ const LeaderboardPage = () => {
   useEffect(() => {
     const fetchContests = async () => {
       try {
-        const { data } = await axios.get('https://code-quest-backend.onrender.com/api/v1/contest/getcontests', {
+        const { data } = await axios.get(`${server}/api/v1/contest/getcontests`, {
           withCredentials: true
         });
         setContests(data.contests);

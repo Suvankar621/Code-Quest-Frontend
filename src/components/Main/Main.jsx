@@ -2,6 +2,7 @@ import React, {   useEffect, useState } from 'react'
 import "./Main.css"
 import HackethonCard from '../Card/HackethonCard'
 import axios from 'axios'
+import { server } from '../../Contants'
 
 
 
@@ -13,7 +14,7 @@ const Main = () => {
   
  
   useEffect(() => {
-    axios.get("https://code-quest-backend.onrender.com/api/v1/contest/getcontests",{
+    axios.get(`${server}/api/v1/contest/getcontests`,{
       withCredentials: true
     }).then((res)=>{
       setcontests(res.data.contests);

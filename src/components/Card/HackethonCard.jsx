@@ -3,6 +3,7 @@ import "./HackethonCard.css";
 import { Link } from 'react-router-dom';
 import { Context } from '../../Context';
 import axios from 'axios';
+import { server } from '../../Contants';
 
 const HackethonCard = ({ id, title, startTime, endTime, isAdmin, isJudge, isLeaderboard }) => {
   const [isReg, setisReg] = useState(false);
@@ -13,7 +14,7 @@ const HackethonCard = ({ id, title, startTime, endTime, isAdmin, isJudge, isLead
   const end = new Date(new Date(endTime).toLocaleString("en-US", { timeZone: "Asia/Kolkata" }));
 
   useEffect(() => {
-    axios.get(`https://code-quest-backend.onrender.com/api/v1/contest/getcontest/${id}`, {
+    axios.get(`${server}/api/v1/contest/getcontest/${id}`, {
       withCredentials: true,
       headers: {
         "Content-Type": "application/json"
@@ -35,7 +36,7 @@ const HackethonCard = ({ id, title, startTime, endTime, isAdmin, isJudge, isLead
 
   return (
     <div className={`${isBlurred ? 'event-cardBlur' : 'event-card'}`}>
-      <img src="Images/event_img.gif" alt="The Hacker" />
+      <img src="Images/event_img.png" alt="The Hacker" />
       
       <div className="event-details">
         <h4>H A C K A T H O N</h4>

@@ -5,6 +5,7 @@ import { Context } from "../../Context";
 import { toast } from "react-toastify";
 import axios from "axios";
 import Loading from "../Loader/Loading";
+import { server } from "../../Contants";
 
 const Navbar = () => {
   const {isAuthenticated,setisAuthenticated,isLoader,setisLoader}=useContext(Context)
@@ -14,7 +15,7 @@ const Navbar = () => {
 
     try {
       setisLoader(true)
-       const {data}= await axios.get("https://code-quest-backend.onrender.com/api/v1/users/logout",
+       const {data}= await axios.get(`${server}/api/v1/users/logout`,
             {
                 withCredentials: true
             }
