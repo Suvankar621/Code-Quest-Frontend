@@ -67,11 +67,12 @@
 } */
  
 .cta-buttons {
-    padding: 5px 30px;
-    font-size: 24px;
+    padding: 1vmax;
+    width: 16vmax;
     background-color: #007bff;
     color: #fff;
     border: none;
+    border-radius: 9px;
     cursor: pointer;
     transition: background-color 0.3s;
     margin-bottom: 10px;
