@@ -126,6 +126,7 @@ contest.registeredTeams.some(team => {
       setisLoader(false)
       toast.success(res.data.message);
     }).catch((e) => {
+      setisLoader(false);
       setisRegistered(false)
       toast.error(e.response.data.message);
     });
