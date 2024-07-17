@@ -101,9 +101,9 @@ contest.registeredTeams.some(team => {
       setMemberEmail(''); // Clear input field after adding member
  
   };
-  console.log(members)
+  console.log(members.length===0)
   // console.log(memberEmail)
-  console.log(contest)
+  // console.log(contest)
   // console.log(isRegistered)
 
   const registerTeam = (e) => {
@@ -144,7 +144,7 @@ if(isLoader){
 
   const startTime = new Date(contest.startTime);
   const endTime = new Date(contest.endTime);
-console.log(isTeamSubmitted)
+// console.log(isRegistered)
   return (
     <>
       <div className='img'>  
@@ -165,20 +165,21 @@ console.log(isTeamSubmitted)
               : <button className="cta-buttons" onClick={handleModalOpen}><b>Participate Now</b></button>
             }
           </div>
-         
-           <div className="mem">
-           <h3>Registered Members</h3>
-           <ol start="1">
-           {members.map((item)=>(
-                <li>{item.email}</li>
-           ))}
-           </ol>
-             {/* {members.map((item,i)=>(
-               <ol start="1">
-                 <li>{item.email}</li>
-               </ol>
-             ))} */}
-           </div>
+         {members.length!==0?
+         <div className="mem">
+         <h3>Registered Members</h3>
+         <ol start="1">
+         {members.map((item)=>(
+              <li>{item.email}</li>
+         ))}
+         </ol>
+           {/* {members.map((item,i)=>(
+             <ol start="1">
+               <li>{item.email}</li>
+             </ol>
+           ))} */}
+         </div>:<></>}
+           
          
           <div ref={modalref} className='cmodal' >
             <form >
@@ -191,11 +192,13 @@ console.log(isTeamSubmitted)
             </form>
       
             <div className="members">
+            <ol start="1">
               {members.map((item)=>(
-                <ol type>
+              
                   <li>{item.email}</li>
-                </ol>
+             
               ))}
+                 </ol>
             </div>
           </div>
         </div>

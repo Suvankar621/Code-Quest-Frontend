@@ -18,7 +18,7 @@ import LeaderboardPage from "./components/Admin Panel/LeaderboardPage";
 import LeaderBoard from "./components/LeaderBoard/LeaderBoard";
 import { server } from "./Contants";
 import Addjury from "./components/Admin Panel/Addjury";
-// import Chatbot from "./Chatbot/Chatbot";
+import Chatbot from "./Chatbot/Chatbot";
 
 function App() {
   const [isAuthenticated, setisAuthenticated] = useState(false);
@@ -62,7 +62,7 @@ function App() {
       }}
     >
       <div className="App">
-        {/* <Chatbot/> */}
+        <Chatbot/>
         <ToastContainer />
         <BrowserRouter>
           <Navbar />

@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Judge.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { server } from '../../Contants';
+import { Context } from '../../Context';
 
 const SolutionPage = () => {
   const [questions, setQuestions] = useState([]);
   const [teamScores, setTeamScores] = useState({}); // Track scores per team
+  const {user} =useContext(Context)
   const { id } = useParams();
 
   useEffect(() => {
@@ -18,7 +20,20 @@ const SolutionPage = () => {
             'Content-Type': 'application/json'
           },
         });
-        setQuestions(res.data.contest.questions);
+ 
+        const userEmailAddress = user.email;
+
+        // Assuming `res.data.contest.questions` is an array of questions with `judges` field
+        const contestQuestions = res.data.contest.questions;
+        
+        // Filter questions where the user's email is included in the judges
+        const filteredQuestions = contestQuestions.filter(question => {
+          return question.judges.some(judge => judge.email === userEmailAddress);
+        });
+   
+        // Set the filtered questions to state or do further processing
+        setQuestions(filteredQuestions);
+        // setQuestions(res.data.contest.questions);
         initializeTeamScores(res.data.contest.registeredTeams);
       } catch (error) {
         console.error('Error fetching contest data:', error);
@@ -84,76 +99,89 @@ const SolutionPage = () => {
     console.log(e.submissions)
 
   });
-  
+  const groupedSubmissions = questions.reduce((acc, question) => {
+    question.submissions.forEach((submission) => {
+      if (!acc[submission.userId]) {
+        acc[submission.userId] = { userId: submission.userId, submissions: [], questionId: question._id };
+      }
+      acc[submission.userId].submissions.push(submission);
+    });
+    return acc;
+  }, {});
   return (
     <>
       <h2>Answer Submissions</h2>
-      {questions.map((question) => (
-        <div className="containersss" key={question._id}>
-          <h3>Question: {question.questionText}</h3>
-          {question.submissions.map((submission,i) => (
-               <>
+      <section className="participant-panel">
+  <div className="containers1">
+    <h2>Submissions</h2>
+    {Object.keys(groupedSubmissions).map((userId) => {
+      const group = groupedSubmissions[userId];
+      return (
+        <div className="containersss" key={userId}>
+          <h2><b>{userId}</b> </h2>
+          {group.submissions.map((submission, i) => (
             <div className="submission" key={submission._id}>
-              <h2><b>{submission.userId}</b> </h2>
-              <p className="submission-message">Answer: {i} <a href={submission.file.url} target='__blanck'>{submission.file.url}</a></p>
-              <form
-                className="score-form"
-                key={`form-${submission._id}`}
-                onSubmit={(e) => handleSubmitScores(e, submission.userId, question._id)}
-              >
-                <label htmlFor={`score1-${submission.userId}`}>Score 1:</label>
-                <input
-                  type="number"
-                  value={teamScores[submission.userId]?.score1 || ''}
-                  id={`score1-${submission.userId}`}
-                  name={`score1-${submission.userId}`}
-                  min="0"
-                  max="100"
-                  required
-                  onChange={(e) => handleScoreChange(e, submission.userId, 'score1')}
-                />
-                <label htmlFor={`score2-${submission.userId}`}>Score 2:</label>
-                <input
-                  type="number"
-                  value={teamScores[submission.userId]?.score2 || ''}
-                  id={`score2-${submission.userId}`}
-                  name={`score2-${submission.userId}`}
-                  min="0"
-                  max="100"
-                  required
-                  onChange={(e) => handleScoreChange(e, submission.userId, 'score2')}
-                />
-                <label htmlFor={`score3-${submission.userId}`}>Score 3:</label>
-                <input
-                  type="number"
-                  value={teamScores[submission.userId]?.score3 || ''}
-                  id={`score3-${submission.userId}`}
-                  name={`score3-${submission.userId}`}
-                  min="0"
-                  max="100"
-                  required
-                  onChange={(e) => handleScoreChange(e, submission.userId, 'score3')}
-                />
-                <label htmlFor={`score4-${submission.userId}`}>Score 4:</label>
-                <input
-                  type="number"
-                  value={teamScores[submission.userId]?.score4 || ''}
-                  id={`score4-${submission.userId}`}
-                  name={`score4-${submission.userId}`}
-                  min="0"
-                  max="100"
-                  required
-                  onChange={(e) => handleScoreChange(e, submission.userId, 'score4')}
-                />
-                <button type="submit">Submit Scores</button>
-              </form>
-             
+              <p className="submission-message">
+                Answer {i + 1}: <a href={submission.file.url} target='__blanck'>{submission.file.url}</a>
+              </p>
             </div>
-             <p>-----------------------------------------------------------------------</p>
-          </>
           ))}
+          <form
+            className="score-form"
+            onSubmit={(e) => handleSubmitScores(e, userId, group.questionId)}
+          >
+            <label htmlFor={`score1-${userId}`}>Score 1:</label>
+            <input
+              type="number"
+              value={teamScores[userId]?.score1 || ''}
+              id={`score1-${userId}`}
+              name={`score1-${userId}`}
+              min="0"
+              max="100"
+              required
+              onChange={(e) => handleScoreChange(e, userId, 'score1')}
+            />
+            <label htmlFor={`score2-${userId}`}>Score 2:</label>
+            <input
+              type="number"
+              value={teamScores[userId]?.score2 || ''}
+              id={`score2-${userId}`}
+              name={`score2-${userId}`}
+              min="0"
+              max="100"
+              required
+              onChange={(e) => handleScoreChange(e, userId, 'score2')}
+            />
+            <label htmlFor={`score3-${userId}`}>Score 3:</label>
+            <input
+              type="number"
+              value={teamScores[userId]?.score3 || ''}
+              id={`score3-${userId}`}
+              name={`score3-${userId}`}
+              min="0"
+              max="100"
+              required
+              onChange={(e) => handleScoreChange(e, userId, 'score3')}
+            />
+            <label htmlFor={`score4-${userId}`}>Score 4:</label>
+            <input
+              type="number"
+              value={teamScores[userId]?.score4 || ''}
+              id={`score4-${userId}`}
+              name={`score4-${userId}`}
+              min="0"
+              max="100"
+              required
+              onChange={(e) => handleScoreChange(e, userId, 'score4')}
+            />
+            <button type="submit">Submit Scores</button>
+          </form>
+          <p>-----------------------------------------------------------------------</p>
         </div>
-      ))}
+      );
+    })}
+  </div>
+</section>
     </>
   );
 };

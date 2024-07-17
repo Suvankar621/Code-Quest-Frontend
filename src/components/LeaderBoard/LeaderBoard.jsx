@@ -140,7 +140,7 @@ const LeaderBoard = () => {
     if (loading) {
         return <div>Loading...</div>;
     }
-
+console.log(userNames)
     return (
         <section className="leaderboard">
             <div className="container">

@@ -40,21 +40,21 @@ console.log(contestDetails)
     const prompt = `
     ${input} 
     
-    Endpoints Are:
-    - Login: [Login](http://localhost:3000/login)
-    - Signup: [Signup](http://localhost:3000/register)
-    - Leaderboard: [Leaderboard](http://localhost:3000/leaderboard)
-    - Contest participate page or main page: [Main](http://localhost:3000/#main_container)
-    - Create contest page: [Create Contest](http://localhost:3000/create)
-    
-    All contest details (in India time zone):
-    ${contestDetails}
-
-
-    behave like chatbot
+   
     `;
     
+    // Endpoints Are:
+    // - Login: [Login](http://localhost:3000/login)
+    // - Signup: [Signup](http://localhost:3000/register)
+    // - Leaderboard: [Leaderboard](http://localhost:3000/leaderboard)
+    // - Contest participate page or main page: [Main](http://localhost:3000/#main_container)
+    // - Create contest page: [Create Contest](http://localhost:3000/create)
+    
+    // All contest details (in India time zone):
+    // ${contestDetails}
 
+
+    // behave like chatbot
     
     const res = await model.generateContent(prompt);
     const responseText = res.response.text();

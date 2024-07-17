@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from 'react-modal';
-import "./CreateContest.css"
 import Dashboard from './Dashboard';
 import HackethonCard from '../Card/HackethonCard';
 import { toast } from 'react-toastify';
 import { server } from '../../Contants';
+import './CreateContest.css';
 
 const CreateContest = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -15,7 +15,7 @@ const CreateContest = () => {
     startTime: '',
     endDate: '',
     endTime: '',
-    questions: [{ questionText: '' }]
+    questions: [{ questionText: '', judges: [{ email: '' }, { email: '' }] }]
   });
   const [contests, setContests] = useState([]);
   const isAdmin = true;
@@ -32,7 +32,7 @@ const CreateContest = () => {
       }
     };
     fetchContests();
-  }, [contests]);
+  }, [modalIsOpen]);
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -52,6 +52,14 @@ const CreateContest = () => {
         ...formData,
         questions: updatedQuestions
       });
+    } else if (name.startsWith('judge')) {
+      const [fieldName, questionIndex, judgeIndex] = name.split('-');
+      const updatedQuestions = [...formData.questions];
+      updatedQuestions[questionIndex].judges[judgeIndex].email = value;
+      setFormData({
+        ...formData,
+        questions: updatedQuestions
+      });
     } else {
       setFormData({
         ...formData,
@@ -63,7 +71,7 @@ const CreateContest = () => {
   const handleAddQuestion = () => {
     setFormData({
       ...formData,
-      questions: [...formData.questions, { questionText: '' }]
+      questions: [...formData.questions, { questionText: '', judges: [{ email: '' }, { email: '' }] }]
     });
   };
 
@@ -82,7 +90,10 @@ const CreateContest = () => {
 
     const contestData = {
       title: formData.title,
-      questions: formData.questions.map(q => q.questionText),
+      questions: formData.questions.map(q => ({
+        questionText: q.questionText,
+        judges: q.judges.map(j => ({ email: j.email }))
+      })),
       startTime: startTime.toISOString(),
       endTime: endTime.toISOString()
     };
@@ -102,7 +113,7 @@ const CreateContest = () => {
       console.error('There was an error creating the contest!', error);
     }
   };
-console.log(contests)
+
   return (
     <>
       <Dashboard />
@@ -142,6 +153,47 @@ console.log(contests)
                   onChange={handleInputChange}
                   required
                 ></textarea>
+                {isAdmin && (
+                  <div>
+                    {question.judges.map((judge, judgeIndex) => (
+                      <div key={judgeIndex}>
+                        <label className="form-label">Judge {judgeIndex + 1}'s Email:</label>
+                        <input
+                          type="email"
+                          name={`judge-${index}-${judgeIndex}`}
+                          className="form-input"
+                          value={judge.email}
+                          onChange={handleInputChange}
+                          required
+                        />
+                      </div>
+                    ))}
+                    <button
+                      type="button"
+                      className="add-judge-button"
+                      onClick={() => {
+                        const updatedQuestions = [...formData.questions];
+                        updatedQuestions[index].judges.push({ email: '' });
+                        setFormData({ ...formData, questions: updatedQuestions });
+                      }}
+                    >
+                      Add Judge
+                    </button>
+                    {question.judges.length > 1 && (
+                      <button
+                        type="button"
+                        className="remove-judge-button"
+                        onClick={() => {
+                          const updatedQuestions = [...formData.questions];
+                          updatedQuestions[index].judges.pop();
+                          setFormData({ ...formData, questions: updatedQuestions });
+                        }}
+                      >
+                        Remove Judge
+                      </button>
+                    )}
+                  </div>
+                )}
                 {formData.questions.length > 1 && (
                   <button
                     type="button"

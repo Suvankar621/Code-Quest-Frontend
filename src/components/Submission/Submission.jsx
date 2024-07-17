@@ -165,9 +165,9 @@ console.log(isTeamSubmitted)
           <div className="containers1">
             <h2>Submit Your Work</h2>
             <form id="submissionForm" onSubmit={handleSubmit} encType="multipart/form-data">
-              {question.map((q) => (
+              {question.map((q,i) => (
                 <div key={q._id} className="form-group">
-                  <h3>Q) {q.questionText}</h3>
+                  <h3>Q{i+1}) {q.questionText}</h3>
 
                  {!isTeamSubmitted?<label className="label1" htmlFor={`fileInput-${q._id}`}>
                     Upload File:

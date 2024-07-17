@@ -209,7 +209,7 @@ footer {
     gap: 10px;
     position: absolute;
     border: 1px solid black;
-    width: 700px;
+    width: 800px;
     height: 300px;
     padding: 3vmax;
     margin-left: 5vmax;
@@ -233,7 +233,7 @@ footer {
     background-color: transparent;
     color: black;
     margin-top: -21.3vmax;
-    margin-left: 31.5vmax;
+    margin-left: 40.5vmax;
     font-size: 14px;
     border: 1px solid black;
     width: 2vmax;

@@ -243,3 +243,9 @@ textarea {
 
 
   }
+  #submissionForm .form-group {
+    text-align: justify;
+    white-space: normal; /* Ensures text wraps within the given width */
+    overflow-wrap: break-word; /* Breaks words if they are too long */
+    word-wrap: break-word; /* Ensures compatibility with older browsers */
+  }
