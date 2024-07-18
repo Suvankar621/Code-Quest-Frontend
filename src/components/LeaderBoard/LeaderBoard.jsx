@@ -1,15 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './LeaderBoardScore.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { server } from '../../Contants';
+import { Context } from '../../Context';
 
 const LeaderBoard = () => {
     const [contest, setContest] = useState([]);
-    const [userNames, setUserNames] = useState({});
+    const [teamNames, setTeamNames] = useState({});
     const [loading, setLoading] = useState(true);
-    const [sortedByQuestion, setSortedByQuestion] = useState(false); // State to track if sorting by question
+    const [sortedByQuestion, setSortedByQuestion] = useState(false);
     const { id } = useParams();
+    const { user } = useContext(Context);
+
+    const categoryNames = ['Idea', 'Architecture', 'Completeness', 'UI/UX'];
 
     useEffect(() => {
         const fetchContestData = async () => {
@@ -23,10 +27,22 @@ const LeaderBoard = () => {
                 setContest(res.data.contest.questions.flatMap(question =>
                     question.submissions.map(submission => ({
                         ...submission,
-                        questionId: question._id // Add questionId to each submission
+                        questionId: question._id
                     }))
                 ));
                 setLoading(false);
+
+                // Fetch team names
+                const teams = res.data.contest.registeredTeams;
+                const teamNamesMap = teams.reduce((acc, team) => {
+                    acc[team.teamLeader] = team.teamName;
+                    team.members.forEach(member => {
+                        acc[member._id] = team.teamName;
+                    });
+                    return acc;
+                }, {});
+
+                setTeamNames(teamNamesMap);
             } catch (error) {
                 console.error('Error fetching contest data:', error);
                 setContest([]);
@@ -37,64 +53,37 @@ const LeaderBoard = () => {
         fetchContestData();
     }, [id]);
 
-    useEffect(() => {
-        const fetchUserNames = async () => {
-            try {
-                const userNamesPromises = contest.map(submission =>
-                    axios.get(`${server}/api/v1/users/user/${submission.userId}`, {
-                        withCredentials: true,
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                    }).then(userRes => ({
-                        userId: submission.userId,
-                        name: userRes.data.user.name
-                    }))
-                );
+    // Function to aggregate scores by user and calculate the sum of scores
+    const aggregateScores = () => {
+        const aggregatedScores = {};
 
-                const userNamesData = await Promise.all(userNamesPromises);
-                const namesMap = userNamesData.reduce((acc, curr) => {
-                    acc[curr.userId] = curr.name;
-                    return acc;
-                }, {});
+        contest.forEach(entry => {
+            const { userId, scores } = entry;
 
-                setUserNames(namesMap);
-            } catch (error) {
-                console.error('Error fetching user names:', error);
+            if (!(userId in aggregatedScores)) {
+                aggregatedScores[userId] = {
+                    totalScore: 0,
+                    teamName: teamNames[userId] || 'Loading...',
+                    highestCategoryScore: 0,
+                    highestCategoryName: ''
+                };
             }
-        };
 
-        if (contest.length > 0) {
-            fetchUserNames();
-        }
-    }, [contest]);
+            if (scores) {
+                const { score1 = 0, score2 = 0, score3 = 0, score4 = 0 } = scores;
+                aggregatedScores[userId].totalScore += score1 + score2 + score3 + score4;
+                const highestScore = Math.max(score1, score2, score3, score4);
+                if (highestScore > aggregatedScores[userId].highestCategoryScore) {
+                    aggregatedScores[userId].highestCategoryScore = highestScore;
+                    aggregatedScores[userId].highestCategoryName = categoryNames[[score1, score2, score3, score4].indexOf(highestScore)];
+                }
+            }
+        });
 
-    // Aggregate scores by user and calculate the average score
-    const userScores = contest.reduce((acc, curr) => {
-        const { userId, scores } = curr;
+        return Object.values(aggregatedScores);
+    };
 
-        if (!acc[userId]) {
-            acc[userId] = { totalScore: 0, count: 0 };
-        }
-
-        // Adjust to access scores from submission correctly
-        if (scores && scores.score1 !== null) {
-            acc[userId].totalScore += scores.score1;
-            acc[userId].count += 1;
-        }
-
-        return acc;
-    }, {});
-
-    const averageScores = Object.entries(userScores).map(([userId, { totalScore, count }]) => ({
-        userId,
-        averageScore: count > 0 ? totalScore / count : 0
-    }));
-
-    // Sort the average scores in descending order
-    const sortedContest = averageScores.sort((a, b) => b.averageScore - a.averageScore);
-
-    // Function to sort by question-wise scores
+    // Function to sort by question-wise scores and include highest category score
     const sortByQuestion = () => {
         const questionWiseScores = contest.reduce((acc, curr) => {
             const { questionId, userId, scores } = curr;
@@ -104,35 +93,39 @@ const LeaderBoard = () => {
             }
 
             if (!acc[questionId][userId]) {
-                acc[questionId][userId] = { totalScore: 0, count: 0 };
+                acc[questionId][userId] = {
+                    totalScore: 0,
+                    highestCategoryScore: 0,
+                    highestCategoryName: ''
+                };
             }
 
-            if (scores && scores.score1 !== null) {
-                acc[questionId][userId].totalScore += scores.score1;
-                acc[questionId][userId].count += 1;
+            if (scores) {
+                const { score1 = 0, score2 = 0, score3 = 0, score4 = 0 } = scores;
+                acc[questionId][userId].totalScore += score1 + score2 + score3 + score4;
+                const highestScore = Math.max(score1, score2, score3, score4);
+                if (highestScore > acc[questionId][userId].highestCategoryScore) {
+                    acc[questionId][userId].highestCategoryScore = highestScore;
+                    acc[questionId][userId].highestCategoryName = categoryNames[[score1, score2, score3, score4].indexOf(highestScore)];
+                }
             }
 
             return acc;
         }, {});
 
-        const questionWiseAverageScores = Object.entries(questionWiseScores).map(([questionId, userScores]) => ({
+        const sortedQuestionWiseScores = Object.entries(questionWiseScores).map(([questionId, userScores]) => ({
             questionId,
-            scores: Object.entries(userScores).map(([userId, { totalScore, count }]) => ({
+            scores: Object.entries(userScores).map(([userId, { totalScore, highestCategoryScore, highestCategoryName }]) => ({
                 userId,
-                averageScore: count > 0 ? totalScore / count : 0
+                totalScore,
+                highestCategoryScore,
+                highestCategoryName
             }))
-        }));
-
-        // Sort the average scores for each question in descending order
-        const sortedQuestionWiseScores = questionWiseAverageScores.map(({ questionId, scores }) => ({
-            questionId,
-            scores: scores.sort((a, b) => b.averageScore - a.averageScore)
         }));
 
         setSortedByQuestion(sortedQuestionWiseScores);
     };
 
-    // Reset sorting to overall leaderboard
     const resetSort = () => {
         setSortedByQuestion(false);
     };
@@ -140,7 +133,7 @@ const LeaderBoard = () => {
     if (loading) {
         return <div>Loading...</div>;
     }
-console.log(userNames)
+
     return (
         <section className="leaderboard">
             <div className="container">
@@ -155,15 +148,19 @@ console.log(userNames)
                                         <tr>
                                             <th>Rank</th>
                                             <th>Team Name</th>
-                                            <th>Average Score</th>
+                                            <th>Total Score</th>
+                                            <th>Highest Category Score</th>
+                                            <th>Category Name</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {scores.map((e, idx) => (
                                             <tr key={e.userId}>
                                                 <td>{idx + 1}</td>
-                                                <td>{userNames[e.userId] || 'Loading...'}</td>
-                                                <td>{e.averageScore.toFixed(2)}</td>
+                                                <td>{teamNames[e.userId] || 'Loading...'}</td>
+                                                <td>{e.totalScore}</td>
+                                                <td>{e.highestCategoryScore}</td>
+                                                <td>{e.highestCategoryName}</td>
                                             </tr>
                                         ))}
                                     </tbody>
@@ -180,16 +177,20 @@ console.log(userNames)
                             <thead>
                                 <tr>
                                     <th>Rank</th>
-                                    <th>Participant Name</th>
-                                    <th>Average Score</th>
+                                    <th>Team Name</th>
+                                    <th>Total Score</th>
+                                    <th>Highest Category Score</th>
+                                    <th>Category Name</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {sortedContest.map((e, index) => (
-                                    <tr key={e.userId}>
+                                {aggregateScores().map((e, index) => (
+                                    <tr key={index}>
                                         <td>{index + 1}</td>
-                                        <td>{userNames[e.userId] || 'Loading...'}</td>
-                                        <td>{e.averageScore.toFixed(2)}</td>
+                                        <td>{e.teamName}</td>
+                                        <td>{e.totalScore}</td>
+                                        <td>{e.highestCategoryScore}</td>
+                                        <td>{e.highestCategoryName}</td>
                                     </tr>
                                 ))}
                             </tbody>

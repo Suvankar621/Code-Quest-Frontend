@@ -19,8 +19,12 @@ import LeaderBoard from "./components/LeaderBoard/LeaderBoard";
 import { server } from "./Contants";
 import Addjury from "./components/Admin Panel/Addjury";
 import Chatbot from "./Chatbot/Chatbot";
+import RegisteredUsers from "./components/Admin Panel/RegisteredUsers";
+
+
 
 function App() {
+  
   const [isAuthenticated, setisAuthenticated] = useState(false);
   const [isLoader, setisLoader] = useState(false);
   const [user, setUser] = useState({});
@@ -57,13 +61,14 @@ function App() {
         setUser,
         contest,
         setcontest,
-   
-
       }}
     >
+<ToastContainer
+position="top-center"
+/>
       <div className="App">
         <Chatbot/>
-        <ToastContainer />
+     
         <BrowserRouter>
           <Navbar />
           <Routes>
@@ -83,6 +88,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/event/:id" element={<EventPage />} />
+          
+           {isAuthenticated? <Route path="/registeredmembers" element={<RegisteredUsers />} />: 
+           <Route path="/" element={<Hero />} />} {/*Admin */}
             {isAuthenticated ? (
               <Route path="/create" element={<CreateContest />} />
             ) : (

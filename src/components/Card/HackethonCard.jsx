@@ -20,11 +20,30 @@ const HackethonCard = ({ id, title, startTime, endTime, isAdmin, isJudge, isLead
         "Content-Type": "application/json"
       },
     }).then((res) => {
-      if (res.data && res.data.contest.registeredUsers) {
-        setisReg(res.data.contest.registeredUsers.includes(user._id));
+      const userIsRegistered = res.data.contest.registeredTeams.some((team) =>
+        team.members.some((member) => member.email === user.email)
+      );
+
+      // if(userIsRegistered){
+      //   setisReg(userIsRegistered)
+
+      // }else 
+      if (res.data && res.data.contest.registeredTeams) {
+        const userIsInTeam = res.data.contest.registeredTeams.some(
+          (team) =>
+            team.teamLeader.toString() === user._id||
+            team.members.some((member) => member.email === user.email)
+        );
+        console.log(userIsInTeam)
+        setisReg(userIsInTeam);
       } else {
         setisReg(false);
       }
+     
+      
+      
+
+      
     }).catch(() => {
       setisReg(false);
     });
@@ -32,7 +51,7 @@ const HackethonCard = ({ id, title, startTime, endTime, isAdmin, isJudge, isLead
 
   const nowDate = new Date(now);
   const isBlurred = nowDate < start || nowDate > end;
-
+console.log(isReg)
 
   return (
     <div className={`${isBlurred ? 'event-cardBlur' : 'event-card'}`}>

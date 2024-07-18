@@ -6,6 +6,13 @@
     margin: auto;
     overflow: hidden;
 }
+.money{
+    color: white;
+    background-color:rgb(13, 194, 0); ;
+    font-size: 27px;
+    padding: 0.5vmax;
+    border-radius: 50px;
+}
 .text{
     margin-left: 2vmax;
 }

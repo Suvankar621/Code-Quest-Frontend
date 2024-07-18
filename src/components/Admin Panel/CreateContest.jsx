@@ -19,7 +19,7 @@ const CreateContest = () => {
   });
   const [contests, setContests] = useState([]);
   const isAdmin = true;
-
+console.log(formData)
   useEffect(() => {
     const fetchContests = async () => {
       try {

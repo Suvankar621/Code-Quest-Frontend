@@ -23,6 +23,7 @@ const Hero = () => {
             <p>Welcome to <span className="cq">CodeQuest</span>, where innovation meets collaboration! Join us for an electrifying event packed with creativity, coding, and competition.</p>
             <Link to={"/register"}><button className='btn' >Register</button></Link>
             <h3 className='ev'>Note:- Event Starts on:- Tomorrow </h3>
+            {/* <h3 className='pm'>Price Money:- <span className="money">$5000000 </span></h3> */}
             {/* <div className="theme-selector">
             <h3>Colour Picker:</h3>
             <select onChange={handleThemeChange}>
