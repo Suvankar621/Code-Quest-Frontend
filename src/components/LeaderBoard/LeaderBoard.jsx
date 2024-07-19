@@ -71,8 +71,17 @@ const LeaderBoard = () => {
 
             if (scores) {
                 const { score1 = 0, score2 = 0, score3 = 0, score4 = 0 } = scores;
-                aggregatedScores[userId].totalScore += score1 + score2 + score3 + score4;
+
+                // Calculate the highest score
                 const highestScore = Math.max(score1, score2, score3, score4);
+
+                // Filter out teams with any score less than 10
+                if (score1 < 10 || score2 < 10 || score3 < 10 || score4 < 10) {
+                    delete aggregatedScores[userId];
+                    return;
+                }
+
+                aggregatedScores[userId].totalScore += score1 + score2 + score3 + score4;
                 if (highestScore > aggregatedScores[userId].highestCategoryScore) {
                     aggregatedScores[userId].highestCategoryScore = highestScore;
                     aggregatedScores[userId].highestCategoryName = categoryNames[[score1, score2, score3, score4].indexOf(highestScore)];
@@ -102,8 +111,17 @@ const LeaderBoard = () => {
 
             if (scores) {
                 const { score1 = 0, score2 = 0, score3 = 0, score4 = 0 } = scores;
-                acc[questionId][userId].totalScore += score1 + score2 + score3 + score4;
+
+                // Calculate the highest score
                 const highestScore = Math.max(score1, score2, score3, score4);
+
+                // Filter out teams with any score less than 10
+                if (score1 < 10 || score2 < 10 || score3 < 10 || score4 < 10) {
+                    delete acc[questionId][userId];
+                    return acc;
+                }
+
+                acc[questionId][userId].totalScore += score1 + score2 + score3 + score4;
                 if (highestScore > acc[questionId][userId].highestCategoryScore) {
                     acc[questionId][userId].highestCategoryScore = highestScore;
                     acc[questionId][userId].highestCategoryName = categoryNames[[score1, score2, score3, score4].indexOf(highestScore)];
@@ -154,15 +172,17 @@ const LeaderBoard = () => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {scores.map((e, idx) => (
-                                            <tr key={e.userId}>
-                                                <td>{idx + 1}</td>
-                                                <td>{teamNames[e.userId] || 'Loading...'}</td>
-                                                <td>{e.totalScore}</td>
-                                                <td>{e.highestCategoryScore}</td>
-                                                <td>{e.highestCategoryName}</td>
-                                            </tr>
-                                        ))}
+                                        {scores
+                                            .filter(e => e.totalScore >= 40) // filter out entries with any score less than 10 (total must be at least 40)
+                                            .map((e, idx) => (
+                                                <tr key={e.userId}>
+                                                    <td>{idx + 1}</td>
+                                                    <td>{teamNames[e.userId] || 'Loading...'}</td>
+                                                    <td>{e.totalScore}</td>
+                                                    <td>{e.highestCategoryScore}</td>
+                                                    <td>{e.highestCategoryName}</td>
+                                                </tr>
+                                            ))}
                                     </tbody>
                                 </table>
                             ) : (
@@ -184,15 +204,17 @@ const LeaderBoard = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {aggregateScores().map((e, index) => (
-                                    <tr key={index}>
-                                        <td>{index + 1}</td>
-                                        <td>{e.teamName}</td>
-                                        <td>{e.totalScore}</td>
-                                        <td>{e.highestCategoryScore}</td>
-                                        <td>{e.highestCategoryName}</td>
-                                    </tr>
-                                ))}
+                                {aggregateScores()
+                                    .filter(e => e.totalScore >= 40) // filter out entries with any score less than 10 (total must be at least 40)
+                                    .map((e, index) => (
+                                        <tr key={index}>
+                                            <td>{index + 1}</td>
+                                            <td>{e.teamName}</td>
+                                            <td>{e.totalScore}</td>
+                                            <td>{e.highestCategoryScore}</td>
+                                            <td>{e.highestCategoryName}</td>
+                                        </tr>
+                                    ))}
                             </tbody>
                         </table>
                     </div>

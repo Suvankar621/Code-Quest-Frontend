@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { server } from '../../Contants';
 import { Context } from '../../Context';
+import { Spinner } from '../Loader/Spinner';
 
 const SolutionPage = () => {
   const [questions, setQuestions] = useState([]);
@@ -96,7 +97,7 @@ const SolutionPage = () => {
   };
 
   if (questions.length === 0) {
-    return <div>Loading...</div>;
+    return <Spinner/>;
   }
 
   const groupedSubmissions = questions.reduce((acc, question) => {
