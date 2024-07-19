@@ -54,7 +54,7 @@ const RegisteredUsers = () => {
         fetchContests();
     }, []);
 
-    if (!loading) {
+    if (loading) {
         return <Spinner />
     }
 
