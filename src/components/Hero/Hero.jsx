@@ -22,7 +22,9 @@ const Hero = () => {
             <h1 className='type_text'><span className="el">Elevate your skills,</span> <span className="eyk">expand your knowledge,</span> <span className="rest">and push the boundaries of what's possible</span></h1>
             <p>Welcome to <span className="cq">CodeQuest</span>, where innovation meets collaboration! Join us for an electrifying event packed with creativity, coding, and competition.</p>
             <Link to={"/register"}><button className='btn' >Register</button></Link>
-            <h3 className='ev'>Note:- Event Starts on:- Tomorrow </h3>
+            <p className='ev' >Contest Date: <span>DD/MM/YY</span> </p>
+            <p className='pmm'>Prize Money: <span className='money'>$500000</span> </p>
+            
             {/* <h3 className='pm'>Price Money:- <span className="money">$5000000 </span></h3> */}
             {/* <div className="theme-selector">
             <h3>Colour Picker:</h3>
@@ -46,6 +48,9 @@ const Hero = () => {
     </div>
 
     <img src="Images/Wave.png" alt="" className='wave' />
+    <div className="scrollText">
+      <pre> Registration Start : 22/07/2024, Registration End : 29/07/2024, Contest Start : 01/08/2024, Contest End : 03/08/2024, Result Date : 01/09/2024  </pre>
+    </div>
     </div>
   )
 }

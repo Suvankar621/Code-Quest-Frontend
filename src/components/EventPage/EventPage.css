@@ -228,17 +228,23 @@ footer {
     border-radius: 9px;
     margin-left: 0.7vmax;
 }
-#close{
+/* #close{
     position: absolute;
     background-color: transparent;
     color: black;
-    margin-top: -20.7vmax;
-    margin-left: 38.5vmax;
+    margin-top: -21vmax;
+    margin-left: 40vmax;
     font-size: 14px;
     border: 1px solid black;
     width: 2vmax;
     height: 2vmax;
     cursor: pointer;
+} */
+
+#close{
+width: 10vmax;
+background-color: red;
+cursor: pointer;
 }
 .cmodal{
     display: none;

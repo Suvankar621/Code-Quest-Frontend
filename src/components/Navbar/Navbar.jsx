@@ -43,12 +43,12 @@ if(isLoader){
          <Link to={"/"}>
             <input type="button" value="Home" className="Home" />
             </Link>
-            <Link to={"/"}>
+            <a href="https://codequest-about-contact-us-page.netlify.app/" target="_blank" rel="noreferrer">
             <input type="button" value="About Us" className="About" />
-            </Link>
-            <Link to={"/"}>
+            </a>
+            <a href="https://codequest-about-contact-us-page.netlify.app/contact" target="_blank" rel="noreferrer">
             <input type="button" value="Contact Us" className="contact" />
-            </Link>
+            </a>
       </div>
     
       <div className="auth-buttons">

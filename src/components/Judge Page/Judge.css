@@ -7,7 +7,13 @@
     background-color: #fff;
     gap: 10px;
 }
- 
+#sol_opn_btn{
+    text-decoration: none;
+    background-color: #068932;
+    color: white;
+    padding: 0.5vmax;
+    border-radius: 9px;
+}
 .judge-panel  {
     width: 90%;
     margin: 0 auto;
@@ -57,6 +63,7 @@ padding: 2vmax;
 .score-form {
     display: flex;
     align-items: center;
+   
    
 
 }

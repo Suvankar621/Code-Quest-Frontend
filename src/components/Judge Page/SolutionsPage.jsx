@@ -46,6 +46,7 @@ const SolutionPage = () => {
 
   const initializeTeamScores = (teams) => {
     const initialScores = {};
+    // console.log(team)
     teams.forEach(team => {
       initialScores[team._id] = {
         score1: '',
@@ -124,7 +125,7 @@ const SolutionPage = () => {
                 {group.submissions.map((submission, i) => (
                   <div className="submission" key={submission._id}>
                     <p className="submission-message">
-                      Answer {i + 1}: <a href={submission.file.url} target='__blanck'>{submission.file.url}</a>
+                      Answer {i + 1}: <a href={submission.file.url} target='__blanck' id='sol_opn_btn'>Open</a>
                     </p>
                   </div>
                 ))}

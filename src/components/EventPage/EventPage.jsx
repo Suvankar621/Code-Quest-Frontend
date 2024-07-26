@@ -93,9 +93,17 @@ const EventPage = () => {
     setMemberEmail(e.target.value);
   };
 
+  // const handleAddMember = (e) => {
+  //   e.preventDefault();
+  //   setMembers([...members, { email: memberEmail }]);
+  //   setMemberEmail(""); // Clear input field after adding member
+  // };
+
   const handleAddMember = (e) => {
     e.preventDefault();
-    setMembers([...members, { email: memberEmail }]);
+    if (memberEmail.trim() !== "") {
+      setMembers([...members, { email: memberEmail }]);
+    }
     setMemberEmail(""); // Clear input field after adding member
   };
   console.log(members.length === 0);
@@ -208,7 +216,7 @@ const EventPage = () => {
               <button onClick={handleAddMember}>Add Members</button>
               <button onClick={registerTeam}>Register</button>
               <button id="close" onClick={handleModalClose}>
-                X
+                Close
               </button>
             </form>
 

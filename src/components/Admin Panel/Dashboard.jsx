@@ -20,7 +20,7 @@ if(!isAuthenticated){
     
         {user.role!=="Participants" && user.role!=="Judge" ?
         <>
-        <Link to={"/create"} >Create Contest</Link><Link to={"/addjury"} >Add Jury Members</Link><Link to={"/registeredmembers"} >Registered Users</Link>
+        <Link to={"/addjury"} >Add Jury Members</Link><Link to={"/create"} >Create Contest</Link><Link to={"/registeredmembers"} >Registered Users</Link>
         </>:<></>}
         <Link to={"/leaderboard"} >Leaderboard</Link>
       </div>

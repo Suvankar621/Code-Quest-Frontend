@@ -5,13 +5,23 @@
     width: 72%;
     margin: auto;
     overflow: hidden;
+    
+
+}
+.Hero .text{
+    margin-top: 1px;
 }
 .money{
     color: white;
     background-color:rgb(13, 194, 0); ;
-    font-size: 27px;
-    padding: 0.5vmax;
-    border-radius: 50px;
+    font-size: 17px;
+    padding: 1vmax;
+    border-radius: 27px;
+    margin-left: 1vmax;
+    font-weight: bold;
+}
+.pmm{
+    font-weight: bold;
 }
 .text{
     margin-left: 2vmax;
@@ -41,12 +51,14 @@
 .wave{
     position: absolute;
     bottom: 0;
-    width: 100vw;
+    width: 99.3vw;
    
 }
 .container{
     margin-top: 3vmax;
-   overflow: hidden;
+    overflow: hidden;
+    
+
 }
 .el{
     color: white;
@@ -55,6 +67,7 @@
     animation: glow 3s infinite; 
 }
 .ev{
+    font-weight: bold;
     animation: glow 3s infinite; 
 }
 
@@ -74,6 +87,40 @@
     scale: 0.9;
     border: none;
 }
+
+.scrollText{
+    position: absolute;
+    display: flex;
+    justify-content: flex-start;
+    bottom: 0;
+    /* background-color: royalblue; */
+    width: 99%;
+    /* color: white; */
+    font-weight: bold;
+    font-size: 15px;
+    opacity: 0.5;
+    overflow: hidden;
+    /* height: 2vmax; */
+  
+}
+.scrollText pre{
+    text-align: center;
+    animation: scrollTextAnimation 30s infinite ; 
+}
+
+@keyframes scrollTextAnimation {
+    /* 0% {
+        transform: translateX(0px);
+    } */
+    /* 50%{
+        transform: translateX(800px);
+        
+    }
+  */
+    100% {
+        transform: translateX(1200px); 
+    }
+  }
 @keyframes glow {
     0% {
         color: #c300ff; 

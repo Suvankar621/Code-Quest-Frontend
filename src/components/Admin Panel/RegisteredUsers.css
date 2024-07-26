@@ -1,0 +1,18 @@
+.registered-users{
+    background-color: white;
+    padding: 1vmax;
+    border-radius: 9px;
+    margin: 1vmax;
+    margin-top: 3vmax;
+}
+.container_reg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.container_reg h2{
+    border: 1px solid black;
+    padding: 1vmax;
+    border-radius: 9px;
+}

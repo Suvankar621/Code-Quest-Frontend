@@ -1,17 +1,18 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import './LeaderBoardScore.css';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { server } from '../../Contants';
-import { Context } from '../../Context';
+// import { Context } from '../../Context';
 
 const LeaderBoard = () => {
     const [contest, setContest] = useState([]);
     const [teamNames, setTeamNames] = useState({});
     const [loading, setLoading] = useState(true);
     const [sortedByQuestion, setSortedByQuestion] = useState(false);
+    // const [sortCategory, setSortCategory] = useState(null);
     const { id } = useParams();
-    const { user } = useContext(Context);
+    // const { user } = useContext(Context);
 
     const categoryNames = ['Idea', 'Architecture', 'Completeness', 'UI/UX'];
 
@@ -53,7 +54,6 @@ const LeaderBoard = () => {
         fetchContestData();
     }, [id]);
 
-    // Function to aggregate scores by user and calculate the sum of scores
     const aggregateScores = () => {
         const aggregatedScores = {};
 
@@ -72,10 +72,8 @@ const LeaderBoard = () => {
             if (scores) {
                 const { score1 = 0, score2 = 0, score3 = 0, score4 = 0 } = scores;
 
-                // Calculate the highest score
                 const highestScore = Math.max(score1, score2, score3, score4);
 
-                // Filter out teams with any score less than 10
                 if (score1 < 10 || score2 < 10 || score3 < 10 || score4 < 10) {
                     delete aggregatedScores[userId];
                     return;
@@ -92,7 +90,6 @@ const LeaderBoard = () => {
         return Object.values(aggregatedScores);
     };
 
-    // Function to sort by question-wise scores and include highest category score
     const sortByQuestion = () => {
         const questionWiseScores = contest.reduce((acc, curr) => {
             const { questionId, userId, scores } = curr;
@@ -112,10 +109,8 @@ const LeaderBoard = () => {
             if (scores) {
                 const { score1 = 0, score2 = 0, score3 = 0, score4 = 0 } = scores;
 
-                // Calculate the highest score
                 const highestScore = Math.max(score1, score2, score3, score4);
 
-                // Filter out teams with any score less than 10
                 if (score1 < 10 || score2 < 10 || score3 < 10 || score4 < 10) {
                     delete acc[questionId][userId];
                     return acc;
@@ -144,6 +139,18 @@ const LeaderBoard = () => {
         setSortedByQuestion(sortedQuestionWiseScores);
     };
 
+    const sortCategoryWise = (questionId, categoryIndex) => {
+        const questionScores = sortedByQuestion.find(q => q.questionId === questionId);
+        if (questionScores) {
+            questionScores.scores.sort((a, b) => {
+                const scoreA = contest.find(c => c.userId === a.userId && c.questionId === questionId).scores[`score${categoryIndex + 1}`] || 0;
+                const scoreB = contest.find(c => c.userId === b.userId && c.questionId === questionId).scores[`score${categoryIndex + 1}`] || 0;
+                return scoreB - scoreA;
+            });
+            setSortedByQuestion([...sortedByQuestion]);
+        }
+    };
+
     const resetSort = () => {
         setSortedByQuestion(false);
     };
@@ -160,6 +167,13 @@ const LeaderBoard = () => {
                     sortedByQuestion.map(({ questionId, scores }, index) => (
                         <div key={questionId}>
                             <h3>Question {index + 1}</h3>
+                            <div>
+                                {categoryNames.map((category, idx) => (
+                                    <button key={idx} onClick={() => sortCategoryWise(questionId, idx)}>
+                                        Sort by {category}
+                                    </button>
+                                ))}
+                            </div>
                             {scores.length > 0 ? (
                                 <table>
                                     <thead>
@@ -173,7 +187,7 @@ const LeaderBoard = () => {
                                     </thead>
                                     <tbody>
                                         {scores
-                                            .filter(e => e.totalScore >= 40) // filter out entries with any score less than 10 (total must be at least 40)
+                                            .filter(e => e.totalScore >= 40)
                                             .map((e, idx) => (
                                                 <tr key={e.userId}>
                                                     <td>{idx + 1}</td>
@@ -205,7 +219,7 @@ const LeaderBoard = () => {
                             </thead>
                             <tbody>
                                 {aggregateScores()
-                                    .filter(e => e.totalScore >= 40) // filter out entries with any score less than 10 (total must be at least 40)
+                                    .filter(e => e.totalScore >= 40)
                                     .map((e, index) => (
                                         <tr key={index}>
                                             <td>{index + 1}</td>
