@@ -16,10 +16,10 @@ const Login = () => {
     e.preventDefault();
 
     // Check if the email address ends with @pursuitsoftware.com
-    if (!email.endsWith('@pursuitsoftware.com') && !email.endsWith('@pursuitsoftware.biz')) {
-      toast.error('Please Enter Your Pursuit Software Official Mail');
-      return;
-    }
+    // if (!email.endsWith('@pursuitsoftware.com') && !email.endsWith('@pursuitsoftware.biz')) {
+    //   toast.error('Please Enter Your Pursuit Software Official Mail');
+    //   return;
+    // }
 
     try {
       setisLoader(true);

@@ -55,7 +55,7 @@ console.log(isReg)
 
   return (
     <div className={`${isBlurred ? 'event-cardBlur' : 'event-card'}`}>
-      <img src="Images/event_img.png" alt="The Hacker" />
+      <img src="Images/event_img.gif" alt="The Hacker" />
       
       <div className="event-details">
         <h4>H A C K A T H O N</h4>
